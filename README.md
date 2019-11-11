@@ -134,3 +134,46 @@ El servidor usa las siguientes variables de entorno para su configuración:
 - `HUB_SERVER_PORT`: El puerto en el que publicará su API REST.
 - `AUTH_SERVER_HOST`: El host en el que se encuentra el servidor de autenticación.
 - `AUTH_SERVER_PORT`: El puerto en el que está publicado el API REST del servidor de autenticación.
+
+### dms1920-game-server
+
+Es el servidor de juego.
+
+#### API REST
+
+La comunicación con el servicio se realiza a través de un API REST:
+
+- `/`: Verificación del estado del servidor. No realiza ninguna operación, pero permite conocer si el servidor está funcionando sin miedo a alterar su estado en modo alguno.
+  - **Método**: `GET`
+  - **Respuesta**:
+    - `200`: El servidor está funcionando correctamente.
+- `/unirse`: Endpoint para unirse a la partida.
+  - **Método**: `POST`
+  - **Parámetros**:
+    - `token`: El token de usuario obtenido tras hacer login.
+    - `nombre`: (opcional) El nombre del usuario en la partida.
+  - **Respuesta**:
+    - `200`: El usuario se ha unido con exito.
+    - `401`: El token dado es incorrecto.
+    - `500`: El usuario no puede unirse a la partida (probablemente está llena).
+- `/obtener`: Endpoint para obtener el estado del juego.
+  - **Método**: `GET`
+  - **Respuesta**:
+    - `200`: El contenido de la respuesta es el estado del juego.
+    - `500`: No se ha podido devolver el estado del juego.
+- `/mover`: Endpoint para realizar un movimiento.
+  - **Método**: `POST`
+  - **Parámetros**:
+    - `token`: El token a validar.
+    - `movimiento`: El movimiento a realizar.
+  - **Respuesta**:
+    - `200`: El movimiento se ha realizado con exito.
+    - `401`: El token dado es incorrecto.
+    - `500`: El movimiento dado es incorrecto.
+    
+#### Configuración
+
+El servidor usa las siguientes variables de entorno para su configuración:
+
+- `GAME_SERVER_PORT`: El puerto en el que publicará su API REST.
+- `GAME_SERVER_IP`: La IP en la que publicará su API REST.
