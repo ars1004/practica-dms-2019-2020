@@ -31,20 +31,20 @@ class RestApi():
         Returns:
             A tuple with the following values:
                 - (200, 'OK') cuando se une con exito.
-                - (401, 'Error al verificar al usuario') cuando el token es erroneo
+                - (401, 'Unauthorized') cuando el token es erroneo
                 - (500, 'Server error') cuando ocurre un error.
         """
         try:
             token = request.form['token']
-            nombre = ''
-            if 'nombre' in request.form:
-                nombre = request.form['nombre']
             
             if self.authCon.verificar_usuario(token):
+                nombre = ''
+                if 'nombre' in request.form:
+                    nombre = request.form['nombre']
                 #TODO unir al usuario al servidor
                 return (200, 'OK')
             else:
-                return (401, 'Error al verificar al usuario')
+                return (401, 'Unauthorized')
         except:
             return (500, 'Server error')
 
@@ -55,73 +55,125 @@ class RestApi():
             - request: The HTTP request received in the REST endpoint.
         Returns:
             A tuple with the following values:
-                - (200, authentication token) on a successful login.
-                - (401, 'Unauthorized') on a failed login.
+                - (200, 'OK') cuando se da de alta correctamente.
+                - (401, 'Unauthorized') cuando no se puede verificar al usuario.
+                - (500, 'Error) cuando falla el servidor.
         """
-        if self.hubCon.darDeAlta():
-            return (200, 'OK')
-        else:
+        try:
+            token = request.form['token']
+
+            if self.authCon.verificar_usuario(token):
+                if self.hubCon.darDeAlta():
+                    return (200, 'OK')
+                else:
+                    return (500, 'Error')
+            else:
+                return (401, 'Unauthorized')
+        except:
             return (500, 'Error')
 
     def dar_de_baja(self, request):
-        """ Token checking handler.
-        ---
-        Checks the validity of an authentication token.
+        """ Da de baja el servidor en el hub.
 
         Parameters:
             - request: The HTTP request received in the REST endpoint.
         Returns:
             A tuple with the following values:
-                - (200, 'OK') when the provided token is valid.
-                - (401, 'Unauthorized') for an incorrect token.
+                - (200, 'OK') cuando se da de alta correctamente.
+                - (401, 'Unauthorized') cuando no se puede verificar al usuario.
+                - (500, 'Error) cuando falla el servidor.
         """
-        if self.hubCon.darDeBaja():
-            return (200, 'OK')
-        else:
+
+        try:
+            token = request.form['token']
+
+            if self.authCon.verificar_usuario(token):
+                if self.hubCon.darDeBaja():
+                    return (200, 'OK')
+                else:
+                    return (500, 'Error')
+            else :
+                return (401, 'Unauthorized')
+        except:
             return (500, 'Error')
 
     def obtener_estado(self, request):
-        """ Scores listing handler.
-        ---
-        Retrieves a list of scores.
+        """ Obtiene el estado de una partida.
 
         Parameters:
             - request: The HTTP request received in the REST endpoint.
         Returns:
             A tuple with the following values:
-                - (200, list of score records) when the list was successfully retrieved.
-        """
-        #TODO llamar a obtener estado del juego.
-        return (200, 'estado')
-
-    def hacer_movimiento(self, request):
-        """ Scores increasing handler.
-        ---
-        Increments (or decrements) the score of a user
-
-        Parameters:
-            - request: The HTTP request received in the REST endpoint.
-        Returns:
-            A tuple with the following values:
-                - (200, 'OK') when the score was successfully updated.
-                - (401, 'Unauthorized') when the user cannot update the scores.
+                - (200, estado) cuando se obtiene el estado correctamente.
+                - (500, 'Error) cuando falla el servidor.
         """
         try:
-            movimiento = request.form['movimiento']
+            #TODO llamar a obtener estado del juego.
+            return (200, 'OK')
         except:
-            return (500, 'Error en el envio')
+            return (500, 'Error')
 
+    def hacer_movimiento(self, request):
+        """ Hace un movimiento.
 
-        #TODO llamar a hacer movimiento con el movimiento obtenido de request
+        Parameters:
+            - request: The HTTP request received in the REST endpoint.
+        Returns:
+            A tuple with the following values:
+                - (200, 'OK') cuando el movimiento se ha realizado correctamente.
+                - (401, 'Unauthorized') cuando no se puede verificar al usuario.
+                - (500, 'Error) cuando falla el servidor.
+        """
+        try:
+            token = request.form['token']
 
-        return (200, 'movimiento hecho')
+            if self.authCon.verificar_usuario(token):
+                movimiento = request.form['movimiento']
+                #TODO llamar a hacer movimiento con el movimiento obtenido de request
+                return (200, 'OK')
+            else:
+                return (401, 'Unauthorized')
+        except:
+            return (500, 'Error')
+
 
     def obtener_juegos(self, request):
-        #TODO obtener los juegos disponibles
+        """ Obtiene un listado de los juegos disponibles.
 
-        return (200, 'juego')
+        Parameters:
+            - request: The HTTP request received in the REST endpoint.
+        Returns:
+            A tuple with the following values:
+                - (200, 'OK') cuando se obtienen correctamente los juegos.
+                - (500, 'Error) cuando falla el servidor.
+        """
+        try:
+            #TODO obtener los juegos disponibles
+
+            return (200, 'OK')
+        except:
+            return (500, 'Error')
 
     def seleccionar_juego(self, request):
-        #TODO seleccionar juego
+        """ Selecciona el juego del servidor.
 
-        return (200, 'Juego seleccionado correctamente')
+        Parameters:
+            - request: The HTTP request received in the REST endpoint.
+        Returns:
+            A tuple with the following values:
+                - (200, 'OK') cuando el juego se ha seleccionado correctamente.
+                - (401, 'Unauthorized') cuando no se puede verificar al usuario.
+                - (500, 'Error) cuando falla el servidor.
+        """
+
+        try:
+            token = request.form['token']
+
+            if self.authCon.verificar_usuario(token):
+                #TODO seleccionar juego
+
+                return (200, 'OK')
+            else:
+                return (401, 'Unauthorized')
+        except:
+            return (500, 'Error')
