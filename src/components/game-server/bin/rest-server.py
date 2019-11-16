@@ -55,7 +55,7 @@ def dar_de_alta():
     post:
         summary: Registra el servidor en el hub.
         parameters:
-            - name: (opcional) Nombre del servidor.
+            - nombre: (opcional) Nombre del servidor.
         responses:
             200:
                 description: El servidor se ha registrado correctamente.

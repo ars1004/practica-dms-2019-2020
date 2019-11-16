@@ -22,27 +22,34 @@ class RestApi():
         return (200, 'OK')
 
     def unirse(self, request):
-        """ User creation handler.
+        """ Gestor de union de usuario.
         ---
-        Performs the user creation operation, generating a new user in the database.
+        Une un usuario a la partida.
 
         Parameters:
             - request: The HTTP request received in the REST endpoint.
         Returns:
             A tuple with the following values:
-                - (200, 'OK') on a successful creation.
-                - (500, 'Server error') on a failed creation.
+                - (200, 'OK') cuando se une con exito.
+                - (401, 'Error al verificar al usuario') cuando el token es erroneo
+                - (500, 'Server error') cuando ocurre un error.
         """
-        token = request.form['token']
-        nombre = request.form['nombre']
-
-
-        return (200, 'OK')
+        try:
+            token = request.form['token']
+            nombre = ''
+            if 'nombre' in request.form:
+                nombre = request.form['nombre']
+            
+            if self.authCon.verificar_usuario(token):
+                #TODO unir al usuario al servidor
+                return (200, 'OK')
+            else:
+                return (401, 'Error al verificar al usuario')
+        except:
+            return (500, 'Server error')
 
     def dar_de_alta(self, request):
-        """ User login handler.
-        ---
-        Performs the user login operation, generating a new token to be used in future operations.
+        """ Da de alta el servidor en el hub.
 
         Parameters:
             - request: The HTTP request received in the REST endpoint.

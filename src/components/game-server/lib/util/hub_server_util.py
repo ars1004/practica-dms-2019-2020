@@ -11,15 +11,45 @@ class hubServerCon():
         self.game_puerto = os.getenv('GAME_SERVER_PORT', '9876')
         
 
-    def darDeAlta(self):
-        respuesta = requests.post('http://'+self.hub_ip+':'+self.hub_puerto+'/server/register', data = {'name': self.nombre, 'host': self.game_ip, 'port': self.game_puerto})
+    def darDeAlta(self, nombre = None):
+        """ Da de alta un servidor en el hub
+
+        Parameters:
+            - nombre: (opcional) Nombre del servidor. Si no se pasa ningun nombre,
+                se utiliza el nombre obtenido de las variables de entorno.
+        Returns:
+            - True cuando el servidor se da de alta correctamente
+            - False cuando no se puede dar de alta el servidor
+        """
+
+        if not nombre:
+            nombre = self.nombre
+
+        data = {'name': nombre, 'host': self.game_ip, 'port': self.game_puerto}
+        respuesta = requests.post('http://'+self.hub_ip+':'+self.hub_puerto+'/server/register', data = data)
+        
         if respuesta:
             return True
         else:
             return False
 
-    def darDeBaja(self):
-        respuesta = requests.post('http://'+self.hub_ip+':'+self.hub_puerto+'/server/unregister', data = {'name': self.nombre})
+    def darDeBaja(self, nombre = None):
+        """ Da de baja un servidor en el hub
+
+        Parameters:
+            - nombre: (opcional) Nombre del servidor. Si no se pasa ningun nombre,
+                se utiliza el nombre obtenido de las variables de entorno.
+        Returns:
+            - True cuando el servidor se da de baja correctamente
+            - False cuando no se puede dar de baja el servidor
+        """
+
+        if not nombre:
+            nombre = self.nombre
+
+        data = {'name': nombre}
+        respuesta = requests.post('http://'+self.hub_ip+':'+self.hub_puerto+'/server/unregister', data = data)
+
         if respuesta:
             return True
         else:
