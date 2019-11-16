@@ -152,15 +152,45 @@ La comunicación con el servicio se realiza a través de un API REST:
   - **Parámetros**:
     - `token`: El token de usuario obtenido tras hacer login.
     - `nombre`: (opcional) El nombre del usuario en la partida.
-  - **Respuesta**:
+  - **Respuesta**:ervidor de autenticacion.
     - `200`: El usuario se ha unido con exito.
     - `401`: El token dado es incorrecto.
     - `500`: El usuario no puede unirse a la partida (probablemente está llena).
-- `/obtener`: Endpoint para obtener el estado del juego.
+- `/register`: Endpoint para dar de alta el servidor.
+  - **Método**: `POST`
+  - **Parámetros**:
+    - `nombre`: (opcional) El nombre del servidor. Si no se pasa ningun nombre, se utiliza la variable de entorno.
+  - **Respuesta**:
+    - `200`: El servidor se ha dado de alta con exito.
+    - `401`: El token dado es incorrecto.
+    - `500`: El servidor no se puede dar de alta.
+- `/unregister`: Endpoint para dar de baja el servidor.
+  - **Método**: `POST`
+  - **Parámetros**:
+    - `nombre`: (opcional) El nombre del servidor. Si no se pasa ningun nombre, se utiliza la variable de entorno.
+  - **Respuesta**:
+    - `200`: El servidor se ha dado de baja con exito.
+    - `401`: El token dado es incorrecto.
+    - `500`: El servidor no se puede dar de baja.
+- `/obtener/estado`: Endpoint para obtener el estado del juego.
   - **Método**: `GET`
   - **Respuesta**:
     - `200`: El contenido de la respuesta es el estado del juego.
     - `500`: No se ha podido devolver el estado del juego.
+- `/obtener/juegos`: Endpoint para obtener los juegos disponibles.
+  - **Método**: `GET`
+  - **Respuesta**:
+    - `200`: El contenido de la respuesta son los juegos disponibles.
+    - `500`: No se han podido obtener los juegos disponibles.
+- `/seleccionar/juego`: Endpoint para seleccionar un juego para el servidor.
+  - **Método**: `POST`
+  - **Parámetros**:
+    - `token`: El token de usuario obtenido tras hacer login.
+    - `juego`: El nombre del juego que se quiere seleccionar.
+  - **Respuesta**:
+    - `200`: El juego ha sido seleccionado correctamente.
+    - `401`: El token dado es incorrecto.
+    - `500`: El juego no se ha podido seleccionar.
 - `/mover`: Endpoint para realizar un movimiento.
   - **Método**: `POST`
   - **Parámetros**:
@@ -176,4 +206,9 @@ La comunicación con el servicio se realiza a través de un API REST:
 El servidor usa las siguientes variables de entorno para su configuración:
 
 - `GAME_SERVER_PORT`: El puerto en el que publicará su API REST.
-- `GAME_SERVER_IP`: La IP en la que publicará su API REST.
+- `GAME_SERVER_NAME`: El nombre del servidor de juegos.
+- `HUB_SERVER_HOST`: Direccion IP del hub.
+- `HUB_SERVER_PORT`: Puerto del hub.
+- `AUTH_SERVER_HOST`: Direccion IP del servidor de autenticacion.
+- `AUTH_SERVER_PORT`: Puerto del servidor de autenticacion.
+
