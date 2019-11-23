@@ -1,7 +1,6 @@
 from conexionauthserver import *
 from conexionhub import *
 from conexionservidor import *
-from juego import *
 
 import json
 
@@ -47,7 +46,7 @@ class cliente:
             print(str(i) + ' ' + listas[i]['name'])
         opcion = int(input('Seleccione el server al que desea unirse: '))
         servidor = conexionservidor(listas[opcion]['host'],listas[opcion]['port'])
-        servidor.register()
+        # servidor.register()
         servidor.unirse(token,nombre)
         return servidor
     def seleccionarJuegos(servidor,token):

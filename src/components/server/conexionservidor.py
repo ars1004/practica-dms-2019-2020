@@ -7,8 +7,9 @@ class conexionservidor:
     def unirse(self,token,nombre):
         r = requests.post('http://'+self.ip+':'+self.puerto+'/unirse', data ={'token' : token, 'nombre' :nombre})
         return r.text
+    
     def obtenerEstado(self):
-        r = requests.get('http://'+self.ip+':'+self.puerto+'/estado')
+        r = requests.get('http://'+self.ip+':'+self.puerto+'/obtener/estado')
         return r.text
     def obtenerJuegos(self):
         r = requests.get('http://'+self.ip+':'+self.puerto+'/obtener/juegos')

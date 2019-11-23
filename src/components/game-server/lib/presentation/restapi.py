@@ -17,6 +17,7 @@ class RestApi():
         self.authCon = authServerCon()
         self.hubCon = hubServerCon()
         self.juego = Arbitro()
+        # self.juego.check()
 
     def status(self, request):
         """ Status handler.
@@ -40,7 +41,7 @@ class RestApi():
         """
         try:
             token = request.form['token']
-            
+            print(token)
             if self.authCon.verificar_usuario(token):
                 nombre = ''
                 if 'nombre' in request.form:
@@ -49,7 +50,8 @@ class RestApi():
                 return (200, 'OK')
             else:
                 return (401, 'Unauthorized')
-        except:
+        except Exception as e: 
+            print(e)
             return (500, 'Server error')
 
     def dar_de_alta(self, request):
@@ -73,7 +75,8 @@ class RestApi():
                     return (500, 'Error')
             else:
                 return (401, 'Unauthorized')
-        except:
+        except Exception as e: 
+            print(e)
             return (500, 'Error')
 
     def dar_de_baja(self, request):
@@ -98,7 +101,8 @@ class RestApi():
                     return (500, 'Error')
             else :
                 return (401, 'Unauthorized')
-        except:
+        except Exception as e: 
+            print(e)
             return (500, 'Error')
 
     def obtener_estado(self, request):
@@ -114,9 +118,12 @@ class RestApi():
         try:
             turno, tablero, fin = self.juego.obtenerEstado()
             estado = {'turno': turno, 'tablero': tablero, 'fin': fin}
+            print(estado)
             estado = json.dumps(estado)
+            print(estado)
             return (200, estado)
-        except:
+        except Exception as e: 
+            print(e)
             return (500, 'Error')
 
     def hacer_movimiento(self, request):
@@ -141,7 +148,8 @@ class RestApi():
                 return (200, 'OK')
             else:
                 return (401, 'Unauthorized')
-        except:
+        except Exception as e: 
+            print(e)
             return (500, 'Error')
 
 
@@ -159,7 +167,8 @@ class RestApi():
             #TODO obtener los juegos disponibles
 
             return (200, 'OK')
-        except:
+        except Exception as e: 
+            print(e)
             return (500, 'Error')
 
     def seleccionar_juego(self, request):
@@ -183,5 +192,6 @@ class RestApi():
                 return (200, 'OK')
             else:
                 return (401, 'Unauthorized')
-        except:
+        except Exception as e: 
+            print(e)
             return (500, 'Error')

@@ -22,7 +22,7 @@ class Arbitro:
         self.tablero = self.board.grid
         iteracion = 0
         numMayor = 0
-        self.players = np.arange(0)
+        self.players = []
         self.crearJugador
         for i in range(len(self.players)):
             numer = random.randint(0,10)
@@ -44,7 +44,7 @@ class Arbitro:
            if (self.turnPlayer+1) < len(self.players):
                self.turnPlayer = self.players(self.turnPlayer+1)
            else:
-               self.turnPlayer = self.players(0)
+               self.turnPlayer = self.players[0]
                 
         
     def legalMove(self,row,column):
@@ -101,5 +101,6 @@ class Arbitro:
         return player, tablero, self.isFinished()
     
         
-        
+    def check(self):
+        return True
 
