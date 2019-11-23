@@ -3,11 +3,13 @@ class conexionservidor:
     def __init__(self,ip,puerto):
         self.ip = ip
         self.puerto = puerto
-        requests.get('http://'+ip+':'+puerto)
+        requests.get('http://'+self.ip+':'+self.puerto)
+    def register(self):
+            r = requests.post('http://'+self.ip+':'+self.puerto+'/register')
+            return r.text
     def unirse(self,token,nombre):
         r = requests.post('http://'+self.ip+':'+self.puerto+'/unirse', data ={'token' : token, 'nombre' :nombre})
         return r.text
-    
     def obtenerEstado(self):
         r = requests.get('http://'+self.ip+':'+self.puerto+'/obtener/estado')
         return r.text
