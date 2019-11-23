@@ -51,6 +51,7 @@ services:
       app_net:
         ipv4_address: 172.10.1.30
     environment:
+      GAME_SERVER_HOST: 172.10.1.30
       GAME_SERVER_PORT: 9876
       GAME_SERVER_NAME: 'Servidor por defecto'
       HUB_SERVER_HOST: 172.10.1.20

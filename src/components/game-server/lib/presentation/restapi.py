@@ -113,6 +113,7 @@ class RestApi():
         """
         try:
             estado = self.juego.obtenerEstado()
+            estado = json.dumps(estado)
             return (200, estado)
         except:
             return (500, 'Error')

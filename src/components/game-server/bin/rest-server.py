@@ -56,9 +56,12 @@ def dar_de_alta():
         summary: Registra el servidor en el hub.
         parameters:
             - nombre: (opcional) Nombre del servidor.
+            - token: token de usuario
         responses:
             200:
                 description: El servidor se ha registrado correctamente.
+            401:
+                description: El token del usuario no se ha podido verificar.
             500:
                 description: El servidor no se ha podido registrar.
     """
@@ -76,9 +79,12 @@ def dar_de_baja():
         summary: Borra el servidor del hub.
         parameters:
             - name: (opcional) Nombre del servidor.
+            - token: token de usuario
         responses:
             200:
                 description: El servidor se ha borrado correctamente.
+            401:
+                description: El token del usuario no se ha podido verificar.
             500:
                 description: El servidor no se ha podido borrar.
     """
