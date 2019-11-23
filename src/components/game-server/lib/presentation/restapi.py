@@ -112,7 +112,8 @@ class RestApi():
                 - (500, 'Error) cuando falla el servidor.
         """
         try:
-            estado = self.juego.obtenerEstado()
+            turno, tablero, fin = self.juego.obtenerEstado()
+            estado = {'turno': turno, 'tablero': tablero, 'fin': fin}
             estado = json.dumps(estado)
             return (200, estado)
         except:
