@@ -151,7 +151,7 @@ def seleccionar_juego():
 
 @app.route('/mover', methods = ['POST'])
 def hacer_movimiento():
-     """ Endpoint de realizacion de movimiento.
+    """ Endpoint de realizacion de movimiento.
     ---
     post:
         summary: Hace un movimiento en el juego.

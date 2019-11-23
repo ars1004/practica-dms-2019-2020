@@ -1,10 +1,11 @@
-from conexionauthserver import *
+import conexionauthserver as auth
 import conexionhub as hub
 import conexionservidor as servidor
 
 class cliente:
+    #hub = 
+    #servidor = 
     def registrarse():
-        x = conexionauthserver
         print('1.Registrar usuario')
         print('2.Login')
         opcion = input('Bienvenido, indique que opcion desea realizar:')
@@ -13,19 +14,19 @@ class cliente:
         while comprobacion == False:
             if opcion == '1':
                 nombre = input('Nombre de usuario: ')
-                password = input('Contraseña: ')
+                contrasena = input('Contraseña: ')
                 verificar = input('Vuelve a escribir la contraseña:')
-                if password != verificar:
+                if contrasena != verificar:
                     bandera = 1
                     while bandera==1:
                         print('Error, vuelva a introducir la contraseña')
-                        password = input('Contraseña: ')
+                        contrasena = input('Contraseña: ')
                         verificar = input('Vuelve a escribir la contraseña:')
-                        if password == verificar:
+                        if contrasena == verificar:
                             bandera = 0
-                x.register(nombre,password)
+                auth.register(nombre,contrasena)
                 print('Registro realizado con exito, ahora se hara el login')
-                token = x.login(nombre,password)
+                token = auth.login(nombre,contrasena)
                 comprobacion == True
             elif opcion == '2':
                 nombre = input('Nombre de usuario: ')
@@ -35,8 +36,6 @@ class cliente:
             else :
                 print('Te has equivocado hijo de la gran puta que eres tontisimo, vuelve a introducirlo')
                 cliente.registrarse()
-    def obtenerListaServidores():
-        hub.obtenerLista()      
+            
 
 cliente.registrarse()
-cliente.obtenerListaServidores()

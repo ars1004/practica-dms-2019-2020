@@ -5,8 +5,8 @@ Created on Mon Nov 11 21:07:32 2019
 @author: usuario
 """
 import pygame
-from modelo import board
-from modelo import color
+from lib.game.modelo import board
+from lib.game.modelo import color
 
 def main():
     """

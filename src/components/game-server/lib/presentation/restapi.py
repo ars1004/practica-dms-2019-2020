@@ -2,6 +2,9 @@ from flask import Flask, escape, request, abort
 
 from lib.util.auth_server_util import authServerCon
 from lib.util.hub_server_util import hubServerCon
+from lib.game.arbitroEnRaya import Arbitro
+import json
+
 
 import json
 
@@ -13,6 +16,7 @@ class RestApi():
     def __init__(self):
         self.authCon = authServerCon()
         self.hubCon = hubServerCon()
+        self.juego = Arbitro()
 
     def status(self, request):
         """ Status handler.
@@ -41,7 +45,7 @@ class RestApi():
                 nombre = ''
                 if 'nombre' in request.form:
                     nombre = request.form['nombre']
-                #TODO unir al usuario al servidor
+                self.juego.crearJugador()
                 return (200, 'OK')
             else:
                 return (401, 'Unauthorized')
@@ -108,8 +112,8 @@ class RestApi():
                 - (500, 'Error) cuando falla el servidor.
         """
         try:
-            #TODO llamar a obtener estado del juego.
-            return (200, 'OK')
+            estado = self.juego.obtenerEstado()
+            return (200, estado)
         except:
             return (500, 'Error')
 
@@ -129,7 +133,9 @@ class RestApi():
 
             if self.authCon.verificar_usuario(token):
                 movimiento = request.form['movimiento']
-                #TODO llamar a hacer movimiento con el movimiento obtenido de request
+                mov = json.loads(movimiento)
+                x,y = mov['x'], mov['y']
+                self.juego.movePiece(y,x)
                 return (200, 'OK')
             else:
                 return (401, 'Unauthorized')

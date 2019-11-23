@@ -15,8 +15,8 @@ class Arbitro:
     tablero = None
     num = 0
     
-    def __init__(self):
-        size = int(input('introduce un tamaño entre 0 y 8\n'))
+    def __init__(self, size = 3):
+        
         if size>0 and size<9:
             self.board = Board.BoardEnRaya(size)
         self.tablero = self.board.grid
@@ -95,7 +95,10 @@ class Arbitro:
             return False
                 
         
-    #devolver estado del juego
+    def obtenerEstado(self):
+        player = self.arbitro.turnPlayer
+        tablero = self.tablero
+        return player, tablero, self.isFinished()
     
         
         
