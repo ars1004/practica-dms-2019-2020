@@ -1,10 +1,8 @@
 import requests
 class conexionauthserver :
-    ip = '172.10.1.10' 
-    puerto = '1234'
-    def __init__(self,ip, puerto):
-        ip = self.ip 
-        puerto = self.puerto
+    def __init__(self):
+        self.ip = '172.10.1.10' 
+        self.puerto = '1234'
         requests.get('http://'+ip+':'+puerto)
 
     def register(self,username,password):
