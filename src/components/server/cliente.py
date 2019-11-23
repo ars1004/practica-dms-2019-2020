@@ -1,6 +1,7 @@
 from conexionauthserver import *
 from conexionhub import *
 from conexionservidor import *
+from juego import *
 
 import json
 
@@ -35,27 +36,33 @@ class cliente:
         else :
             print('Te has equivocado hijo de la gran puta que eres tontisimo, vuelve a introducirlo')
             cliente.registrarse()
-        return token
+        return token,nombre
     def obtenerListaServidores(token):
         hub = conexionhub()
         lista = hub.obtenerLista(token)
         return lista 
-    def seleccionarServidor(lista): 
+    def seleccionarServidor(lista,nombre): 
         listas = json.loads(lista)
         for i in range(len(listas)):
             print(str(i) + ' ' + listas[i]['name'])
         opcion = int(input('Seleccione el server al que desea unirse: '))
         servidor = conexionservidor(listas[opcion]['host'],listas[opcion]['port'])
+        servidor.register()
         servidor.unirse(token,nombre)
         return servidor
-    def seleccionarOpciones(servidor,token):
-        juegos = servidor.obtenerJuegos()
-        lista_juego = json.loads(juegos)
-        for i in range(len(juegos)):
-            print(str(i) + ' ' + listas[i])
-        
-
-token = cliente.registrarse()
+    def seleccionarJuegos(servidor,token):
+        #Se implementara en la siguiente práctica
+        pass
+    def obtenerEstado(servidor):
+        estado = servidor.obtenerEstado()
+        estados = json.loads(estado)
+    def realizarMoviento(token):
+        row = input('introduce fila ')
+        column = input('introduce columna ')
+        movimiento = json.dump(row,column)
+        print(movimiento)
+token,nombre = cliente.registrarse()
 lista = cliente.obtenerListaServidores(token)
-opcion = cliente.seleccionarServidor(lista)
-seleccionarOpciones(opcion,token)
+opcion = cliente.seleccionarServidor(lista,nombre)
+cliente.obtenerEstado(opcion)
+cliente.realizarMoviento(token)
