@@ -3,10 +3,10 @@ from flask import Flask, escape, request, abort
 from lib.util.auth_server_util import authServerCon
 from lib.util.hub_server_util import hubServerCon
 from lib.game.arbitroEnRaya import Arbitro
-import json
+import lib.util.json_util as json_util
+from lib.util.player_util import PlayerUtil
 
-
-import json
+import sys
 
 class RestApi():
     """ REST API facade.
@@ -17,6 +17,7 @@ class RestApi():
         self.authCon = authServerCon()
         self.hubCon = hubServerCon()
         self.juego = Arbitro()
+        self.player_util = PlayerUtil()
         # self.juego.check()
 
     def status(self, request):
@@ -35,7 +36,7 @@ class RestApi():
             - request: The HTTP request received in the REST endpoint.
         Returns:
             A tuple with the following values:
-                - (200, 'OK') cuando se une con exito.
+                - (200, n) cuando se une con exito. n es el numero del jugador.
                 - (401, 'Unauthorized') cuando el token es erroneo
                 - (500, 'Server error') cuando ocurre un error.
         """
@@ -46,12 +47,13 @@ class RestApi():
                 nombre = ''
                 if 'nombre' in request.form:
                     nombre = request.form['nombre']
-                self.juego.crearJugador()
-                return (200, 'OK')
+                n = self.juego.crearJugador()
+                self.player_util.add_player(token, n)
+                return (200, str(n))
             else:
                 return (401, 'Unauthorized')
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
             return (500, 'Server error')
 
     def dar_de_alta(self, request):
@@ -76,7 +78,7 @@ class RestApi():
             else:
                 return (401, 'Unauthorized')
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
             return (500, 'Error')
 
     def dar_de_baja(self, request):
@@ -102,7 +104,7 @@ class RestApi():
             else :
                 return (401, 'Unauthorized')
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
             return (500, 'Error')
 
     def obtener_estado(self, request):
@@ -116,14 +118,11 @@ class RestApi():
                 - (500, 'Error) cuando falla el servidor.
         """
         try:
-            turno, tablero, fin = self.juego.obtenerEstado()
-            estado = {'turno': turno, 'tablero': tablero, 'fin': fin}
-            print(estado)
-            estado = json.dumps(estado)
-            print(estado)
-            return (200, estado)
+            estado = self.juego.obtenerEstado()
+            estado_json = json_util.estado_a_json(estado)
+            return (200, estado_json)
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
             return (500, 'Error')
 
     def hacer_movimiento(self, request):
@@ -142,14 +141,15 @@ class RestApi():
 
             if self.authCon.verificar_usuario(token):
                 movimiento = request.form['movimiento']
-                mov = json.loads(movimiento)
-                x,y = mov['x'], mov['y']
-                self.juego.movePiece(y,x)
+                x, y = json_util.json_a_movimiento(movimiento)
+                n = self.player_util.token_to_player(token)
+                self.juego.movePiece(x, y, n)
                 return (200, 'OK')
             else:
                 return (401, 'Unauthorized')
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
+            print(n, file=sys.stderr)
             return (500, 'Error')
 
 
@@ -168,7 +168,7 @@ class RestApi():
 
             return (200, 'OK')
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
             return (500, 'Error')
 
     def seleccionar_juego(self, request):
@@ -193,5 +193,5 @@ class RestApi():
             else:
                 return (401, 'Unauthorized')
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
             return (500, 'Error')

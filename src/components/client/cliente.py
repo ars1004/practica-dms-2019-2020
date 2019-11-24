@@ -3,15 +3,16 @@ from conexionhub import *
 from conexionservidor import *
 
 import json
+import time
 
 class cliente:
+    n = 0
     def registrarse():
         x = conexionauthserver()
         print('1.Registrar usuario')
         print('2.Login')
         opcion = input('Bienvenido, indique que opcion desea realizar:')
         print(opcion)
-        comprobacion = 1
         if opcion == '1':
             nombre = input('Nombre de usuario: ')
             password = input('Contraseña: ')
@@ -33,7 +34,7 @@ class cliente:
             token = x.login(nombre,contrasena)
 
         else :
-            print('Te has equivocado hijo de la gran puta que eres tontisimo, vuelve a introducirlo')
+            print('Error')
             cliente.registrarse()
         return token,nombre
     def obtenerListaServidores(token):
@@ -46,8 +47,7 @@ class cliente:
             print(str(i) + ' ' + listas[i]['name'])
         opcion = int(input('Seleccione el server al que desea unirse: '))
         servidor = conexionservidor(listas[opcion]['host'],listas[opcion]['port'])
-        # servidor.register()
-        servidor.unirse(token,nombre)
+        cliente.n = servidor.unirse(token,nombre)
         return servidor
     def seleccionarJuegos(servidor,token):
         #Se implementara en la siguiente práctica
@@ -55,13 +55,29 @@ class cliente:
     def obtenerEstado(servidor):
         estado = servidor.obtenerEstado()
         estados = json.loads(estado)
-    def realizarMoviento(token):
+        return estados
+    def realizarMoviento(token,servidor):
         row = input('introduce fila ')
         column = input('introduce columna ')
-        movimiento = json.dump(row,column)
-        print(movimiento)
+        data = {
+            'x': row,
+            'y': column
+        }
+        print(data)
+        servidor.mover(token,json.dumps(data))
+    def imprimir_estado(estado):
+        print(f"Jugador: {cliente.n}")
+        print(f"Turno: {estado[0]}")
+        for fila in estado[1]:
+            print(fila)
+        print(f"Terminado: {estado[2]}")
+
 token,nombre = cliente.registrarse()
 lista = cliente.obtenerListaServidores(token)
 opcion = cliente.seleccionarServidor(lista,nombre)
-cliente.obtenerEstado(opcion)
-cliente.realizarMoviento(token)
+estado = cliente.obtenerEstado(opcion)
+cliente.imprimir_estado(estado)
+while not estado[2]:
+    cliente.realizarMoviento(token,opcion)
+    estado = cliente.obtenerEstado(opcion)
+    cliente.imprimir_estado(estado)

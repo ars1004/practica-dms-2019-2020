@@ -4,46 +4,53 @@ Created on Mon Nov 11 19:47:19 2019
 Arbitro del juego
 """
 
-from lib.game.modelo import Player
+from modelo import Player
 import random
 import numpy as np
-from lib.game.modelo import Board
+from modelo import Board
 
 class Arbitro:
    
-    turnPlayer = 1
+    turnPlayer = None
     tablero = None
     num = 0
     
-    def __init__(self, size = 3):
-        
+    def __init__(self):
+        size = int(input('introduce un tamaño entre 0 y 8\n'))
         if size>0 and size<9:
             self.board = Board.BoardEnRaya(size)
         self.tablero = self.board.grid
         iteracion = 0
         numMayor = 0
-        self.players = []
+        self.players = np.arange(0)
+        self.crearJugador
+        for i in range(len(self.players)):
+            numer = random.randint(0,10)
+            play = Player.Player(self.num)
+            if iteracion ==0:
+                 numer = numMayor
+                 iteracion += 1
+                 self.turnPlayer = play.name
+            elif numer > numMayor:
+                 self.turnPlayer = play.name
+                 iteracion += 1
        
     def crearJugador (self):
-        if self.num == 3:
-            raise # si se intentan unir mas de dos personas
         self.num = self.num + 1
         self.players.append(self.num)
-        return self.num
-        
     
-    def movePiece(self,row,column,player):
-        if self.turnPlayer == player and self.legalMove(row,column):
+    def movePiece(self,row,column):
            self.board.colocar(row,column,self.turnPlayer)
-           self.turnPlayer = 3 - self.turnPlayer
-        else:
-            raise
+           if (self.turnPlayer+1) < len(self.players):
+               self.turnPlayer = self.players(self.turnPlayer+1)
+           else:
+               self.turnPlayer = self.players(0)
+                
         
     def legalMove(self,row,column):
         if row >= 0 and row < len(self.tablero) and column >= 0 and column < len(self.tablero):
             if self.tablero[row][column] == 0:
-                return True
-        return False
+                self.movePiece(row,column)
         
     def isFinished(self):
         noZero = 0
@@ -88,12 +95,8 @@ class Arbitro:
             return False
                 
         
-    def obtenerEstado(self):
-        player = self.turnPlayer
-        tablero = self.tablero
-        return player, tablero, self.isFinished()
+    #devolver estado del juego
     
         
-    def check(self):
-        return True
+        
 
