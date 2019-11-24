@@ -41,7 +41,7 @@ class cliente:
         hub = conexionhub()
         lista = hub.obtenerLista(token)
         return lista 
-    def seleccionarServidor(lista,nombre): 
+    def seleccionarServidor(lista,nombre,token): 
         listas = json.loads(lista)
         for i in range(len(listas)):
             print(str(i) + ' ' + listas[i]['name'])
@@ -71,13 +71,3 @@ class cliente:
         for fila in estado[1]:
             print(fila)
         print(f"Terminado: {estado[2]}")
-
-token,nombre = cliente.registrarse()
-lista = cliente.obtenerListaServidores(token)
-opcion = cliente.seleccionarServidor(lista,nombre)
-estado = cliente.obtenerEstado(opcion)
-cliente.imprimir_estado(estado)
-while not estado[2]:
-    cliente.realizarMoviento(token,opcion)
-    estado = cliente.obtenerEstado(opcion)
-    cliente.imprimir_estado(estado)
