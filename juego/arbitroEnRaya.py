@@ -62,7 +62,8 @@ class Arbitro:
                    return True
                 if self.tablero[i][j] != 0:
                     noZero += 1
-                    
+                if self.enDiagonal() == True:
+                    return True        
         if noZero ==  len(self.tablero)*len(self.tablero):
             return True
         else:
@@ -95,7 +96,19 @@ class Arbitro:
             return False
                 
         
-    #devolver estado del juego
+    def enDiagonal(self):
+        noZero = 0
+        diagonal = 0
+        for i in range(len(self.tablero)):
+            for j in range(len(self.tablero)):
+                if i == j:
+                    if self.tablero[i][j] != 0:
+                        diagonal += self.tablero[i][j]
+                        noZero += 1
+        if noZero == len(self.tablero) and (noZero == diagonal or noZero == diagonal/2):
+            return True
+        else:
+            return False
     
         
         
