@@ -29,12 +29,15 @@ class Arbitro:
             raise # si se intentan unir mas de dos personas
         self.num = self.num + 1
         self.players.append(self.num)
+        return self.num
         
     
-    def movePiece(self,row,column):
-        if self.legalMove(row,column):
+    def movePiece(self,row,column,player):
+        if self.turnPlayer == player and self.legalMove(row,column):
            self.board.colocar(row,column,self.turnPlayer)
            self.turnPlayer = 3 - self.turnPlayer
+        else:
+            raise
         
     def legalMove(self,row,column):
         if row >= 0 and row < len(self.tablero) and column >= 0 and column < len(self.tablero):

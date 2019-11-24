@@ -4,6 +4,8 @@ from lib.util.auth_server_util import authServerCon
 from lib.util.hub_server_util import hubServerCon
 from lib.game.arbitroEnRaya import Arbitro
 import lib.util.json_util as json_util
+from lib.util.player_util import PlayerUtil
+
 import sys
 
 class RestApi():
@@ -15,6 +17,7 @@ class RestApi():
         self.authCon = authServerCon()
         self.hubCon = hubServerCon()
         self.juego = Arbitro()
+        self.player_util = PlayerUtil()
         # self.juego.check()
 
     def status(self, request):
@@ -33,7 +36,7 @@ class RestApi():
             - request: The HTTP request received in the REST endpoint.
         Returns:
             A tuple with the following values:
-                - (200, 'OK') cuando se une con exito.
+                - (200, n) cuando se une con exito. n es el numero del jugador.
                 - (401, 'Unauthorized') cuando el token es erroneo
                 - (500, 'Server error') cuando ocurre un error.
         """
@@ -44,8 +47,9 @@ class RestApi():
                 nombre = ''
                 if 'nombre' in request.form:
                     nombre = request.form['nombre']
-                self.juego.crearJugador()
-                return (200, 'OK')
+                n = self.juego.crearJugador()
+                self.player_util.add_player(token, n)
+                return (200, str(n))
             else:
                 return (401, 'Unauthorized')
         except Exception as e: 
@@ -138,15 +142,14 @@ class RestApi():
             if self.authCon.verificar_usuario(token):
                 movimiento = request.form['movimiento']
                 x, y = json_util.json_a_movimiento(movimiento)
-                self.juego.movePiece(x, y)
+                n = self.player_util.token_to_player(token)
+                self.juego.movePiece(x, y, n)
                 return (200, 'OK')
             else:
                 return (401, 'Unauthorized')
         except Exception as e: 
             print(e, file=sys.stderr)
-            print(mov, file=sys.stderr)
-            print(x, file=sys.stderr)
-            print(y, file=sys.stderr)
+            print(n, file=sys.stderr)
             return (500, 'Error')
 
 

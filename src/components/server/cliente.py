@@ -3,8 +3,10 @@ from conexionhub import *
 from conexionservidor import *
 
 import json
+import time
 
 class cliente:
+    n = 0
     def registrarse():
         x = conexionauthserver()
         print('1.Registrar usuario')
@@ -45,14 +47,13 @@ class cliente:
             print(str(i) + ' ' + listas[i]['name'])
         opcion = int(input('Seleccione el server al que desea unirse: '))
         servidor = conexionservidor(listas[opcion]['host'],listas[opcion]['port'])
-        servidor.unirse(token,nombre)
+        cliente.n = servidor.unirse(token,nombre)
         return servidor
     def seleccionarJuegos(servidor,token):
         #Se implementara en la siguiente práctica
         pass
     def obtenerEstado(servidor):
         estado = servidor.obtenerEstado()
-        print(estado)
         estados = json.loads(estado)
         return estados
     def realizarMoviento(token,servidor):
@@ -64,8 +65,19 @@ class cliente:
         }
         print(data)
         servidor.mover(token,json.dumps(data))
+    def imprimir_estado(estado):
+        print(f"Jugador: {cliente.n}")
+        print(f"Turno: {estado[0]}")
+        for fila in estado[1]:
+            print(fila)
+        print(f"Terminado: {estado[2]}")
+
 token,nombre = cliente.registrarse()
 lista = cliente.obtenerListaServidores(token)
 opcion = cliente.seleccionarServidor(lista,nombre)
-cliente.obtenerEstado(opcion)
-cliente.realizarMoviento(token,opcion)
+estado = cliente.obtenerEstado(opcion)
+cliente.imprimir_estado(estado)
+while not estado[2]:
+    cliente.realizarMoviento(token,opcion)
+    estado = cliente.obtenerEstado(opcion)
+    cliente.imprimir_estado(estado)
