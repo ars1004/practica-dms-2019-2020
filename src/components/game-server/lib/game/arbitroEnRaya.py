@@ -11,7 +11,7 @@ from lib.game.modelo import Board
 
 class Arbitro:
    
-    turnPlayer = None
+    turnPlayer = 1
     tablero = None
     num = 0
     
@@ -23,34 +23,24 @@ class Arbitro:
         iteracion = 0
         numMayor = 0
         self.players = []
-        self.crearJugador
-        for i in range(len(self.players)):
-            numer = random.randint(0,10)
-            play = Player.Player(self.num)
-            if iteracion ==0:
-                 numer = numMayor
-                 iteracion += 1
-                 self.turnPlayer = play.name
-            elif numer > numMayor:
-                 self.turnPlayer = play.name
-                 iteracion += 1
        
     def crearJugador (self):
+        if self.num == 3:
+            raise # si se intentan unir mas de dos personas
         self.num = self.num + 1
         self.players.append(self.num)
+        
     
     def movePiece(self,row,column):
+        if self.legalMove(row,column):
            self.board.colocar(row,column,self.turnPlayer)
-           if (self.turnPlayer+1) < len(self.players):
-               self.turnPlayer = self.players(self.turnPlayer+1)
-           else:
-               self.turnPlayer = self.players[0]
-                
+           self.turnPlayer = 3 - self.turnPlayer
         
     def legalMove(self,row,column):
         if row >= 0 and row < len(self.tablero) and column >= 0 and column < len(self.tablero):
             if self.tablero[row][column] == 0:
-                self.movePiece(row,column)
+                return True
+        return False
         
     def isFinished(self):
         noZero = 0
@@ -96,7 +86,7 @@ class Arbitro:
                 
         
     def obtenerEstado(self):
-        player = self.arbitro.turnPlayer
+        player = self.turnPlayer
         tablero = self.tablero
         return player, tablero, self.isFinished()
     

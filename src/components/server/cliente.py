@@ -58,14 +58,14 @@ class cliente:
     def realizarMoviento(token,servidor):
         row = input('introduce fila ')
         column = input('introduce columna ')
-        data = {}
-        data['movimiento'] = []
-        data['movimiento'].append({
-        'x': row,
-        'y': column})
+        data = {
+            'x': row,
+            'y': column
+        }
+        print(data)
         servidor.mover(token,json.dumps(data))
 token,nombre = cliente.registrarse()
 lista = cliente.obtenerListaServidores(token)
 opcion = cliente.seleccionarServidor(lista,nombre)
-#cliente.obtenerEstado(opcion)
+cliente.obtenerEstado(opcion)
 cliente.realizarMoviento(token,opcion)

@@ -3,10 +3,8 @@ from flask import Flask, escape, request, abort
 from lib.util.auth_server_util import authServerCon
 from lib.util.hub_server_util import hubServerCon
 from lib.game.arbitroEnRaya import Arbitro
-import json
-
-
-import json
+import lib.util.json_util as json_util
+import sys
 
 class RestApi():
     """ REST API facade.
@@ -51,7 +49,7 @@ class RestApi():
             else:
                 return (401, 'Unauthorized')
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
             return (500, 'Server error')
 
     def dar_de_alta(self, request):
@@ -76,7 +74,7 @@ class RestApi():
             else:
                 return (401, 'Unauthorized')
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
             return (500, 'Error')
 
     def dar_de_baja(self, request):
@@ -102,7 +100,7 @@ class RestApi():
             else :
                 return (401, 'Unauthorized')
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
             return (500, 'Error')
 
     def obtener_estado(self, request):
@@ -116,14 +114,11 @@ class RestApi():
                 - (500, 'Error) cuando falla el servidor.
         """
         try:
-            turno, tablero, fin = self.juego.obtenerEstado()
-            estado = {'turno': turno, 'tablero': tablero, 'fin': fin}
-            print(estado)
-            estado = json.dumps(estado)
-            print(estado)
-            return (200, estado)
+            estado = self.juego.obtenerEstado()
+            estado_json = json_util.estado_a_json(estado)
+            return (200, estado_json)
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
             return (500, 'Error')
 
     def hacer_movimiento(self, request):
@@ -142,14 +137,16 @@ class RestApi():
 
             if self.authCon.verificar_usuario(token):
                 movimiento = request.form['movimiento']
-                mov = json.loads(movimiento)
-                x,y = mov['x'], mov['y']
-                self.juego.movePiece(y,x)
+                x, y = json_util.json_a_movimiento(movimiento)
+                self.juego.movePiece(x, y)
                 return (200, 'OK')
             else:
                 return (401, 'Unauthorized')
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
+            print(mov, file=sys.stderr)
+            print(x, file=sys.stderr)
+            print(y, file=sys.stderr)
             return (500, 'Error')
 
 
@@ -168,7 +165,7 @@ class RestApi():
 
             return (200, 'OK')
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
             return (500, 'Error')
 
     def seleccionar_juego(self, request):
@@ -193,5 +190,5 @@ class RestApi():
             else:
                 return (401, 'Unauthorized')
         except Exception as e: 
-            print(e)
+            print(e, file=sys.stderr)
             return (500, 'Error')
