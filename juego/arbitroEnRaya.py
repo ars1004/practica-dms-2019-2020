@@ -26,18 +26,18 @@ class Arbitro:
         self.crearJugador
         for i in range(len(self.players)):
             numer = random.randint(0,10)
-            play = Player.Player(self.num)
+            player = i
             if iteracion ==0:
                  numer = numMayor
                  iteracion += 1
-                 self.turnPlayer = play.name
+                 self.turnPlayer = player.returnName()
             elif numer > numMayor:
-                 self.turnPlayer = play.name
+                 self.turnPlayer = player.returnName()
                  iteracion += 1
        
     def crearJugador (self):
         self.num = self.num + 1
-        self.players.append(self.num)
+        self.players.append(Player.Player(self.num))
     
     def movePiece(self,row,column):
            self.board.colocar(row,column,self.turnPlayer)
