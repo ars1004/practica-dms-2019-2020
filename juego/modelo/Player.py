@@ -13,7 +13,6 @@ class Player(object):
     num = 0
     def __init__(self,num):
         self.name = num
-        self.col = Color()
         
     def returnName (self):
         return self.name
