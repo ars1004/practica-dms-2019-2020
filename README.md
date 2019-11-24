@@ -152,13 +152,14 @@ La comunicación con el servicio se realiza a través de un API REST:
   - **Parámetros**:
     - `token`: El token de usuario obtenido tras hacer login.
     - `nombre`: (opcional) El nombre del usuario en la partida.
-  - **Respuesta**:ervidor de autenticacion.
+  - **Respuesta**:
     - `200`: El usuario se ha unido con exito.
     - `401`: El token dado es incorrecto.
     - `500`: El usuario no puede unirse a la partida (probablemente está llena).
 - `/register`: Endpoint para dar de alta el servidor.
   - **Método**: `POST`
   - **Parámetros**:
+    - `token`: El token de usuario obtenido tras hacer login.
     - `nombre`: (opcional) El nombre del servidor. Si no se pasa ningun nombre, se utiliza la variable de entorno.
   - **Respuesta**:
     - `200`: El servidor se ha dado de alta con exito.
@@ -167,6 +168,7 @@ La comunicación con el servicio se realiza a través de un API REST:
 - `/unregister`: Endpoint para dar de baja el servidor.
   - **Método**: `POST`
   - **Parámetros**:
+    - `token`: El token de usuario obtenido tras hacer login.
     - `nombre`: (opcional) El nombre del servidor. Si no se pasa ningun nombre, se utiliza la variable de entorno.
   - **Respuesta**:
     - `200`: El servidor se ha dado de baja con exito.
