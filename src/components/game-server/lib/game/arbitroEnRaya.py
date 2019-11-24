@@ -55,7 +55,7 @@ class Arbitro:
                    return True
                 if self.tablero[i][j] != 0:
                     noZero += 1
-                if self.enDiagonal() == True:
+        if self.enDiagonal() == True:
                     return True        
         if noZero ==  len(self.tablero)*len(self.tablero):
             return True
