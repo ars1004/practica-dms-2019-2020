@@ -15,4 +15,10 @@ class Pieza(object):
         self.idPieza = id
         self.color = idJugador
     
+    def obtenerId(self):
+        return self.idPieza
+    
+    def obtenerCoor(self):
+        return self.color
+    
         

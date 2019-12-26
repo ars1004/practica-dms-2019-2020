@@ -15,7 +15,7 @@ class Tablero(object):
     def colocar(self,fila,columna,pieza):
         pass
     
-    def quitarPieza(self,fila,columna,pieza):
+    def quitarPieza(self,fila,columna):
         pass
     
     

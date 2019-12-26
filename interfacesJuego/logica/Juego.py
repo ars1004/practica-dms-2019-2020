@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Interfaz Juego
 Va a crear los jugadores y el creador

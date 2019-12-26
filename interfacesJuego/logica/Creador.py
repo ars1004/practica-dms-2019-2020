@@ -19,7 +19,6 @@ class Creador(object):
         self.board = TableroInterfaz.Tablero(tamaño)
         return self.board.grid
    
-    
     def obtenerEstado(self):
         pass
     

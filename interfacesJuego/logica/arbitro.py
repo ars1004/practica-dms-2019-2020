@@ -12,7 +12,7 @@ class Arbitro(object):
         self.grid = tablero
         self.jugadores = jugadores
         
-    def moverPieza(self,row,column):
+    def moverPieza(self,fila,columna,jugador):
         pass
     
     def obtenerJugadorConTurno(self):
@@ -22,7 +22,7 @@ class Arbitro(object):
             self.turno = self.jugadores[1]
         return self.turno
     
-    def esLegal(self,row,column):
+    def movimientoLegal(self,row,column):
         pass
     
     def estaAcabado(self):
