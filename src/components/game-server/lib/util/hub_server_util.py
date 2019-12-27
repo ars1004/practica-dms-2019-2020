@@ -9,7 +9,7 @@ class hubServerCon():
         self.nombre = os.getenv('GAME_SERVER_NAME', 'Prueba')
         self.game_ip = os.getenv('GAME_SERVER_HOST', '127.0.0.1')
         self.game_puerto = os.getenv('GAME_SERVER_PORT', '9876')
-        # self.darDeAlta()
+        self.darDeAlta()
         
 
     def darDeAlta(self, nombre = None):

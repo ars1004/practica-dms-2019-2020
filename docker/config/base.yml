@@ -43,6 +43,8 @@ services:
       context: ../images/game-server
     depends_on:
       - base
+      - hub
+      - auth-server
     image: dms1920-game-server:latest
     container_name: dms1920-game-server
     volumes:
