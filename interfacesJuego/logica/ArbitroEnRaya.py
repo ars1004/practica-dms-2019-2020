@@ -1,5 +1,5 @@
 """
-Clase concreta arbitro
+Clase concreta arbitro del juego 3 en raya
 """
 import arbitro
 
@@ -12,7 +12,7 @@ class ArbitroEnRaya(arbitro.Arbitro):
         arbitro.Arbitro.__init__(tablero,jugadores)
         
     def moverPieza(self,fila,columna,jugador):
-        if self.jugadorTurno == jugador and self.moviemientoLegal(fila,columna):
+        if self.jugadorTurno == jugador and self.movimientoLegal(fila,columna):
             self.grid.colocar(fila,columna,self.jugadorTurno)
             self.jugadorTurno = self.obtenerJugadorConTurno
         else:
