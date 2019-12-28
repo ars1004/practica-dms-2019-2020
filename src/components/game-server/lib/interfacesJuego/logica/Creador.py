@@ -21,7 +21,3 @@ class Creador(object):
    
     def obtenerEstado(self):
         pass
-    
-    
-        
-    

@@ -9,6 +9,7 @@ import Creador
 class Juego(object):
     
     def __init__(self):
+        self.num = 1
         self.creador = Creador.Creador(self.obtenerTamañoJuego,self.crearJugador)
     
     def obtenerTamañoJuego(self):
@@ -17,7 +18,8 @@ class Juego(object):
     def crearJugador (self):
         if self.num == 3:
             raise # si se intentan unir mas de dos personas
-        self.num = self.num + 1
         jugador = Jugador.Jugador(self.num)
-        self.jugadores.append(jugador.returnId)
-        return self.jugadores
+        return self.jugador
+
+    def obtener_estado(self):
+        return self.creador.obtenerEstado()
