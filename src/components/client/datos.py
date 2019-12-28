@@ -61,7 +61,10 @@ class datos:
             return False
 
     def obtenerJuego(listas,opcion):
-        hub = conexionservidor(listas[opcion]['host'],listas[opcion]['port'])
-        lista = hub.obtenerJuegos()
-        print(lista)
+        servidor = conexionservidor(listas[opcion]['host'],listas[opcion]['port'])
+        lista = servidor.obtenerJuegos()
         return lista
+    def conectarJuego(listasservidor,opcion,listajuego,token):
+        servidor = conexionservidor(listasservidor[opcion]['host'],listasservidor[opcion]['port'])
+        servidor.seleccionarJuego(token,listajuego)
+        return 'ok'

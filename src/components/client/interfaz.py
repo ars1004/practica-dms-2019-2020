@@ -30,7 +30,12 @@ class interfaz:
             print(str(i) + ' ' + listas[i]['name'])
         opcion = int(input('Seleccione el server al que desea unirse: '))
         return opcion,listas
-
+    def listaJuego(lista):
+        listas = json.loads(lista)
+        for i in range(len(listas)):
+            print(str(i) + ' ' + listas[i])
+        opcion = int(input('Seleccione el juego al que desea jugar: '))
+        return opcion,listas
     def posiblesJuegos(lista):
         return 0
     def mostraropciones():

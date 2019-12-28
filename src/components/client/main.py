@@ -1,15 +1,17 @@
 from datos import *
 from interfaz import *
-class principal:
+class main:
     nombre,password,opcion = interfaz.interfazUsuario()
     if opcion == '1':
         token = datos.registrarse(nombre,password)
     elif opcion == '2':
         token = datos.login(nombre,password)
-    lista = datos.obtenerListaServidores(token)
-    opcion,listas = interfaz.listaServidores(lista)
-    servidor = datos.conectarServidor(listas,opcion,nombre,token)
-    lista = datos.obtenerJuego(listas,opcion)
+    listaserver = datos.obtenerListaServidores(token)
+    opcion,listasserver = interfaz.listaServidores(listaserver)
+    servidor = datos.conectarServidor(listasserver,opcion,nombre,token)
+    listajuego = datos.obtenerJuego(listasserver,opcion)
+    opcion,listasjuego = interfaz.listaJuego(listajuego)
+    datos.conectarJuego(listasserver,opcion,listasjuego,token)
     estaacabado = False
     while(estaacabado == False):
         estado = datos.obtenerEstado(servidor)
