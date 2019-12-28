@@ -4,7 +4,7 @@ Crea el tablero e implementa los métodos
     colocar pieza
     quitar pieza
 """
-import TableroInterfaz
+import lib.interfacesJuego.datos.TableroInterfaz
 
 class TableroEnRaya(TableroInterfaz.Tablero):
     

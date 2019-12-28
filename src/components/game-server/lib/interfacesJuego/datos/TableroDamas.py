@@ -2,7 +2,7 @@
 Clase concreta del tablero de las damas
 Crea el tablero
 """
-import TableroInterfaz
+import lib.interfacesJuego.datos.TableroInterfaz
 
 class TableroDamas(TableroInterfaz.Tablero):
     

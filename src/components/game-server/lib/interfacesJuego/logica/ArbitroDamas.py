@@ -2,15 +2,15 @@
 Arbitro del juego Damas
 """
 
-import arbitro
+from lib.interfacesJuego.logica.arbitro import Arbitro
 
-class ArbitroEnRaya(arbitro.Arbitro):
+class ArbitroDamas(Arbitro):
     num = 0
     grid = []
     jugadores = []
     jugadorTurno = 0
     def __init__(self,tablero,jugadores):
-        arbitro.Arbitro.__init__(tablero,jugadores)
+        super().__init__(tablero,jugadores)
         
     def colocarPeonesIniciales (self):
         self.grid = [[0, 'n', 0, 'n', 0, 'n', 0, 'n'],
@@ -168,7 +168,7 @@ class ArbitroEnRaya(arbitro.Arbitro):
             return False
     
     def obtenerJugadorConTurno(self):
-        self.jugadorTurno = arbitro.Arbitro.obtenerJugadorConTurno
+        self.jugadorTurno = super().obtenerJugadorConTurno
         return self.jugadorTurno
     
     def estaAcabado(self):

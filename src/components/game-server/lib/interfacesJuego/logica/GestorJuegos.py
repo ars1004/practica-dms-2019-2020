@@ -1,6 +1,6 @@
-from datos.ListaJugadores import ListaJugadores
-from logica.JuegoDamas import JuegoDamas
-from logica.JuegoEnRaya import JuegoEnRaya
+from lib.interfacesJuego.datos.ListaJugadores import ListaJugadores
+from lib.interfacesJuego.logica.JuegoDamas import JuegoDamas
+from lib.interfacesJuego.logica.JuegoEnRaya import JuegoEnRaya
 
 class GestorJuegos:
     """ Contiene una lista de juegos que se pueden juegar.

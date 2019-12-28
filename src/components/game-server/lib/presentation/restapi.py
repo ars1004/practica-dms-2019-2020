@@ -140,7 +140,7 @@ class RestApi():
 
             if self.authCon.verificar_usuario(token):
                 movimiento_json = request.form['movimiento']
-                movimiento = json_util.json_a_movimiento(movimiento_json)
+                movimiento = json_util.json_a_objeto(movimiento_json)
                 self.gestor_juegos.hacer_movimiento(movimiento, token)
                 return (200, 'OK')
             else:
@@ -161,7 +161,7 @@ class RestApi():
                 - (500, 'Error del servidor') cuando falla el servidor.
         """
         try:
-            juegos = self.gestor_juegos.obtener_juegos
+            juegos = self.gestor_juegos.obtener_juegos()
             juegos_json = json_util.objeto_a_json(juegos)
             return (200, juegos_json)
         except Exception as e: 
@@ -186,7 +186,7 @@ class RestApi():
             if self.authCon.verificar_usuario(token):
                 juego = request.form['juego']
                 self.gestor_juegos.seleccionar_juego(juego)
-                
+
                 return (200, 'OK')
             else:
                 return (401, 'Acceso denegado')

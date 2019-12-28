@@ -2,23 +2,23 @@
 Creador del juego Tres en Raya
 Se encarga de llevar el tablero y crear el arbitro
 """
-import Creador
-from datos import TableroEnRaya
-import ArbitroEnRaya
+from lib.interfacesJuego.logica.Creador import Creador
+from lib.interfacesJuego.datos.TableroEnRaya import TableroEnRaya
+from lib.interfacesJuego.logica.ArbitroEnRaya import ArbitroEnRaya
 
-class CreadorEnRaya(Creador.Creador):
+class CreadorEnRaya(Creador):
     
     def __init__(self,tamaño,jugadores):
         self.adjudicarTamaño(tamaño)
         self.tablero = self.crearTablero(self.tamaño)
         self.jugadores = jugadores
-        self.arbitro = ArbitroEnRaya.ArbitroEnRaya(self.tablero,self.jugadores)
+        self.arbitro = ArbitroEnRaya(self.tablero,self.jugadores)
     
     def adjudicarTamaño(self,size):
-        Creador.Creador.adjudicarTamaño(size)
+        super().adjudicarTamaño(size)
         
     def crearTablero(self,tamaño):
-        self.board = TableroEnRaya.TableroEnRaya(tamaño)
+        self.board = TableroEnRaya(tamaño)
         grid = self.board.devolverTablero
         return grid
    
