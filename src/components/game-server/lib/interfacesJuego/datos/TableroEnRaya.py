@@ -4,13 +4,13 @@ Crea el tablero e implementa los métodos
     colocar pieza
     quitar pieza
 """
-import lib.interfacesJuego.datos.TableroInterfaz
+from lib.interfacesJuego.datos.TableroInterfaz import Tablero
 
-class TableroEnRaya(TableroInterfaz.Tablero):
+class TableroEnRaya(Tablero):
     
     
     def __init__(self,size):
-        TableroInterfaz.Tablero.__init__(self,size)
+        super().__init__(size)
         
     def colocar(self,fila,columna,pieza):
         self.grid[fila][columna] = pieza

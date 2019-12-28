@@ -3,7 +3,7 @@ Clase concreta arbitro del juego 3 en raya
 """
 from lib.interfacesJuego.logica.arbitro import Arbitro
 
-class ArbitroEnRaya(super()):
+class ArbitroEnRaya(Arbitro):
     num = 0
     grid = []
     jugadores = []
@@ -14,7 +14,7 @@ class ArbitroEnRaya(super()):
     def moverPieza(self,fila,columna,jugador):
         if self.jugadorTurno == jugador and self.movimientoLegal(fila,columna):
             self.grid.colocar(fila,columna,self.jugadorTurno)
-            self.jugadorTurno = self.obtenerJugadorConTurno
+            self.jugadorTurno = self.obtenerJugadorConTurno()
         else:
             raise
     
@@ -25,7 +25,7 @@ class ArbitroEnRaya(super()):
         return False
     
     def obtenerJugadorConTurno(self):
-        self.jugadorTurno = super().obtenerJugadorConTurno
+        self.jugadorTurno = super().obtenerJugadorConTurno()
         return self.jugadorTurno
     
     def estaAcabado(self):

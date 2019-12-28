@@ -36,7 +36,7 @@ class ArbitroDamas(Arbitro):
             else:
                 self.grid[filaI][columnaI] = 0
                 self.grid[filaF][columnaF] = 'N'
-            self.jugadorTurno = self.obtenerJugadorConTurno
+            self.jugadorTurno = self.obtenerJugadorConTurno()
         else:
             raise
     

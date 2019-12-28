@@ -2,12 +2,12 @@
 Clase concreta del tablero de las damas
 Crea el tablero
 """
-import lib.interfacesJuego.datos.TableroInterfaz
+from lib.interfacesJuego.datos.TableroInterfaz import Tablero
 
-class TableroDamas(TableroInterfaz.Tablero):
+class TableroDamas(Tablero):
     
     def __init__(self,size):
-       TableroInterfaz.Tablero.__init__(self,size)
+       super().__init__(self,size)
     
     def colocar(self,fila,columna,pieza):
         self.grid[fila][columna] = pieza

@@ -3,7 +3,7 @@ Clase abstracta del Tablero
 se encarga de crear el tablero modelo 
 """
 
-class Tablero(object):
+class Tablero:
     
     def __init__(self,size):
         self.grid = []
