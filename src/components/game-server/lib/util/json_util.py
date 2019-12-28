@@ -18,3 +18,9 @@ def json_a_movimiento(movimiento):
     mov = json.loads(movimiento)
     x,y = mov['x'], mov['y']
     return int(x), int(y)
+
+def objeto_a_json(objeto):
+    return json.dumps(objeto)
+
+def json_a_objeto(json_str):
+    return json.loads(json_str)

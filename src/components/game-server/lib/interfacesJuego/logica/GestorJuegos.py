@@ -41,6 +41,7 @@ class GestorJuegos:
     def añadir_jugador(self, token):
         jugador = self.juego.crearJugador()
         self.jugadores.añadir_jugador(token, jugador)
+        return jugador.returnId()
 
     def hacer_movimiento(self, movimiento, token):
         jugador = self.jugadores.obtener_jugador(token)
