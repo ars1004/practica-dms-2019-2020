@@ -20,4 +20,4 @@ class Creador(object):
         return self.board.grid
    
     def obtenerEstado(self):
-        pass
+        return 1, [[0,0,0],[0,0,0],[0,0,0]], False # Debería usar el metodo de los hijos

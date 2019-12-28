@@ -12,7 +12,4 @@ class JuegoDamas(Juego):
     
     def obtenerTamañoJuego(self):
         return 8
-     
-    def crearJugador (self):
-        super().crearJugador()
 

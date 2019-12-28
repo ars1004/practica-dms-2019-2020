@@ -10,7 +10,4 @@ class JuegoEnRaya(Juego):
     
     def obtenerTamañoJuego(self):
         return 3
-     
-    def crearJugador (self):
-        super().crearJugador()
 
