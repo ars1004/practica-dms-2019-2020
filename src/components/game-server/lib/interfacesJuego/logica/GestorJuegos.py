@@ -1,7 +1,7 @@
 from lib.interfacesJuego.datos.ListaJugadores import ListaJugadores
 from lib.interfacesJuego.logica.JuegoDamas import JuegoDamas
 from lib.interfacesJuego.logica.JuegoEnRaya import JuegoEnRaya
-
+import sys
 class GestorJuegos:
     """ Contiene una lista de juegos que se pueden juegar.
     Cada juego esta en un diccionario donde la clave es el nombre y el
@@ -35,7 +35,8 @@ class GestorJuegos:
     def seleccionar_juego(self, juego):
         """ Selecciona uno de los juegos para jugar.
         """
-        self.juego = self.dict_juegos[juego]()
+        juego = self.dict_juegos[juego]
+        self.juego = juego([1,2])
         self.jugadores.vaciar()
 
     def añadir_jugador(self, token):

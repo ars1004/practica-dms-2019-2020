@@ -8,9 +8,9 @@ from lib.interfacesJuego.logica.Creador import Creador
 
 class Juego(object):
     
-    def __init__(self):
+    def __init__(self, jugadores):
         self.num = 1
-        self.creador = Creador(self.obtenerTamañoJuego,self.crearJugador)
+        self.creador = Creador(self.obtenerTamañoJuego(), jugadores)
     
     def obtenerTamañoJuego(self):
         pass

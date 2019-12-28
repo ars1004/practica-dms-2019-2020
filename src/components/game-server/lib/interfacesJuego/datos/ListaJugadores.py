@@ -18,6 +18,9 @@ class ListaJugadores:
         """Obtiene el token correspondiente al jugador.
         """
         return self.jugador_a_token_dict[player]
+
+    def obtener_numero_jugadores(self):
+        return len(self.jugador_a_token_dict)
     
     def vaciar(self):
         self.jugador_a_token_dict.clear()
