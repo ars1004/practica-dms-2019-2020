@@ -8,11 +8,11 @@ class main:
         token = logica.login(nombre,password)
     listaserver = logica.obtenerListaServidores(token)
     opcionserver,listasserver = datos.listaServidores(listaserver)
-    servidor = logica.conectarServidor(listasserver,opcionserver,nombre,token)
+    #servidor = logica.conectarServidor(listasserver,opcionserver,nombre,token)
     listajuego = logica.obtenerJuego(listasserver,opcionserver)
     opcion,listasjuego = datos.listaJuego(listajuego)
     logica.conectarJuego(listasserver,opcion,opcionserver,listasjuego,token)
-    #servidor = datos.conectarServidor(listasserver,opcion,nombre,token)
+    servidor = logica.conectarServidor(listasserver,opcionserver,nombre,token)
     estaacabado = False
     while(estaacabado == False):
         estadojuego = logica.obtenerEstado(servidor)
