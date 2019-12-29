@@ -19,7 +19,7 @@ class CreadorEnRaya(Creador):
         
     def crearTablero(self,tamaño):
         self.board = TableroEnRaya(tamaño)
-        grid = self.board.devolverTablero
+        grid = self.board.devolverTablero()
         return grid
    
     def obtenerEstado(self):

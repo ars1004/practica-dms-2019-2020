@@ -159,7 +159,7 @@ class ArbitroDamas(Arbitro):
             return False
     
     def obtenerJugadorConTurno(self):
-        self.jugadorTurno = super().obtenerJugadorConTurno
+        self.jugadorTurno = super().obtenerJugadorConTurno()
         return self.jugadorTurno
     
     def estaAcabado(self):
