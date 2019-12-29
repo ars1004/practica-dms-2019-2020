@@ -1,79 +1,46 @@
-# -*- coding: utf-8 -*-
-from conexionauthserver import *
-from conexionhub import *
-from conexionservidor import *
-
+from logica import *
 import json
 import time
-
-
 class datos:
-    def registrarse(nombre, contraseña):
-        x = conexionauthserver()
-        x.register(nombre, contraseña)
-        print('Registro realizado con exito')
-        token = x.login(nombre, contraseña)
-        return token
-
-    def login(nombre, contraseña):
-        x = conexionauthserver()
-        token = x.login(nombre, contraseña)
-        return token
-
-    def obtenerListaServidores(token):
-        hub = conexionhub()
-        lista = hub.obtenerLista(token)
-        return lista
-
-    def seleccionarServer(lista, nombre, token, opcion):
-        servidor = conexionservidor(
-            listas[opcion]['host'], listas[opcion]['port'])
-        cliente.n = servidor.unirse(token, nombre)
-        return servidor
-
-    def conectarServidor(listas, opcion, nombre, token):
-        servidor = conexionservidor(
-            listas[opcion]['host'], listas[opcion]['port'])
-        servidor.unirse(token, nombre)
-        return servidor
-
-    def seleccionJuego():
+    def interfazUsuario():
+        print('1.Registrar usuario')
+        print('2.Login')
+        opcion = input('Bienvenido, indique que opcion desea realizar:')
+        if opcion == '1':
+            nombre = input('Nombre de usuario: ')
+            password = input('Contraseña: ')
+            verificar = input('Vuelve a escribir la contraseña:')
+            if password != verificar:
+                bandera = 1
+                while bandera==1:
+                    print('Error, vuelva a introducir la contraseña')
+                    password = input('Contraseña: ')
+                    verificar = input('Vuelve a escribir la contraseña:')
+                    if password == verificar:
+                        bandera = 0
+        elif opcion == '2':
+            nombre = input('Nombre de usuario: ')
+            password = input('Contraseña: ')
+        return nombre,password,opcion
+    
+    def listaServidores(lista):
+        listas = json.loads(lista)
+        for i in range(len(listas)):
+            print(str(i) + ' ' + listas[i]['name'])
+        opcion = int(input('Seleccione el server al que desea unirse: '))
+        return opcion,listas
+    def listaJuego(lista):
+        listas = json.loads(lista)
+        for i in range(len(listas)):
+            print(str(i) + ' ' + listas[i])
+        opcion = int(input('Seleccione el juego al que desea jugar: '))
+        return opcion,listas
+    def posiblesJuegos(lista):
         return 0
-
-    def obtenerEstado(servidor):
-        estado = servidor.obtenerEstado()
-        estados = json.loads(estado)
-        return estados
-
-    def realizarMoviento(token, servidor):
-        row = input('introduce fila ')
-        column = input('introduce columna ')
-        data = [row, column]
-        print(data)
-        servidor.mover(token, json.dumps(data))
-
-    def imprimir_estado(estado, nombre):
-        print(f"Jugador: {nombre}")
-        print(f"Turno: {estado[0]}")
-        for fila in estado[1]:
-            print(fila)
-        print(f"Terminado: {estado[2]}")
-
-    def estaacabado(estado):
-        if estado[2]:
-            print('El ganador es' + str(estado[0]))
-            return True
-        else:
-            return False
-
-    def obtenerJuego(listas, opcion):
-        servidor = conexionservidor(
-            listas[opcion]['host'], listas[opcion]['port'])
-        lista = servidor.obtenerJuegos()
-        return lista
-
-    def conectarJuego(listasservidor, opcion, listajuego, token):
-        servidor = conexionservidor(
-            listasservidor[opcion]['host'], listasservidor[opcion]['port'])
-        servidor.seleccionarJuego(token, listajuego[opcion])
-        return 'ok'
+    def mostraropciones():
+        print('Lista de cosas disponibles:')
+        print('1.Obtener estado del juego')
+        print('2.Realizar un movimiento')
+        opcion = input('Indique que opcion desea realizar:')
+        return opcion
+    

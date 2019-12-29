@@ -1,32 +1,33 @@
+from logica import *
 from datos import *
-from interfaz import *
 class main:
-    nombre,password,opcion = interfaz.interfazUsuario()
+    nombre,password,opcion = datos.interfazUsuario()
     if opcion == '1':
-        token = datos.registrarse(nombre,password)
+        token = logica.registrarse(nombre,password)
     elif opcion == '2':
-        token = datos.login(nombre,password)
-    listaserver = datos.obtenerListaServidores(token)
-    opcion,listasserver = interfaz.listaServidores(listaserver)
-    # servidor = datos.conectarServidor(listasserver,opcion,nombre,token)
-    listajuego = datos.obtenerJuego(listasserver,opcion)
-    opcion,listasjuego = interfaz.listaJuego(listajuego)
-    datos.conectarJuego(listasserver,opcion,listasjuego,token)
-    servidor = datos.conectarServidor(listasserver,opcion,nombre,token)
+        token = logica.login(nombre,password)
+    listaserver = logica.obtenerListaServidores(token)
+    opcionserver,listasserver = datos.listaServidores(listaserver)
+    servidor = logica.conectarServidor(listasserver,opcionserver,nombre,token)
+    listajuego = logica.obtenerJuego(listasserver,opcionserver)
+    opcion,listasjuego = datos.listaJuego(listajuego)
+    logica.conectarJuego(listasserver,opcion,opcionserver,listasjuego,token)
+    #servidor = datos.conectarServidor(listasserver,opcion,nombre,token)
     estaacabado = False
     while(estaacabado == False):
-        estado = datos.obtenerEstado(servidor)
-        datos.imprimir_estado(estado,nombre)
-        opcion = interfaz.mostraropciones()
+        estadojuego = logica.obtenerEstado(servidor)
+        logica.imprimir_estado(estadojuego,nombre)
+        opcion = datos.mostraropciones()
         if opcion == '1':
-            datos.imprimir_estado(estado,nombre)
+            logica.imprimir_estado(estadojuego,nombre)
         elif opcion == '2':
-            datos.realizarMoviento(token,servidor)
-            estadomovimiento = datos.obtenerEstado(servidor)
-            datos.imprimir_estado(estadomovimiento,nombre)
+            logica.realizarMoviento(token,servidor)
+            estadomovimiento = logica.obtenerEstado(servidor)
+            logica.imprimir_estado(estadomovimiento,nombre)
             if datos.estaacabado(estadomovimiento):
-                estaacabado = datos.estaacabado(estadomovimiento)
+                estaacabado = logica.estaacabado(estadomovimiento)
         else:
             print('Opcion incorrecta vuelva a intentarlo:')
-            
+        if logica.estaacabado(estadojuego):
+            estaacabado == True  
             
