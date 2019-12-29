@@ -19,6 +19,7 @@ class Juego(object):
         if self.num == 3:
             raise # si se intentan unir mas de dos personas
         jugador = Jugador(self.num)
+        self.num += 1
         return jugador
 
     def obtener_estado(self):

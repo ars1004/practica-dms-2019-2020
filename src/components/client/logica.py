@@ -60,7 +60,7 @@ class logica:
 
     def estaacabado(estado):
         if estado[2]:
-            print('El ganador es' + str(estado[0]))
+            print('El ganador es el jugador ' + str(estado[0]))
             return True
         else:
             return False

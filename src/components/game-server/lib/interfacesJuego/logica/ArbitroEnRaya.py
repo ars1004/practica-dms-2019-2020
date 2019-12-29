@@ -14,10 +14,6 @@ class ArbitroEnRaya(Arbitro):
         self.tablero = self.grid.grid
 
     def moverPieza(self,fila,columna,jugador):
-        print(self.jugadorTurno, file=sys.stderr)
-        print(jugador, file=sys.stderr)
-        print(fila, file=sys.stderr)
-        print(columna, file=sys.stderr)
         if self.jugadorTurno == jugador and self.movimientoLegal(fila,columna):
             self.grid.colocar(fila,columna,self.jugadorTurno)
             self.jugadorTurno = self.obtenerJugadorConTurno()

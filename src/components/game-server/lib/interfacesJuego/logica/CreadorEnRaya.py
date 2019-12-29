@@ -25,11 +25,7 @@ class CreadorEnRaya(Creador):
         return grid
 
     def obtenerEstado(self):
-        print("hola", file=sys.stderr)
         player = self.arbitro.jugadorTurno
-        print(player, file=sys.stderr)
         tablero = self.tablero
-        print(tablero, file=sys.stderr)
         acabado = self.arbitro.estaAcabado()
-        print(acabado, file=sys.stderr)
         return player, tablero, acabado

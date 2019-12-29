@@ -6,7 +6,7 @@ class Arbitro(object):
     
     num = 0
     jugadores = []
-    turno = 0
+    turno = 1
     def __init__(self,tablero,jugadores):
         self.grid = tablero
         self.jugadores = jugadores
@@ -15,10 +15,7 @@ class Arbitro(object):
         pass
     
     def obtenerJugadorConTurno(self):
-        if self.turno % 2 == 0:
-            self.turno = self.jugadores[0]
-        else:
-            self.turno = self.jugadores[1]
+        self.turno = 3 - self.turno
         return self.turno
     
     def movimientoLegal(self,row,column):
