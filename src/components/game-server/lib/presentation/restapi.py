@@ -1,23 +1,23 @@
 from flask import Flask, escape, request, abort
 
-from lib.util.auth_server_util import authServerCon
-from lib.util.hub_server_util import hubServerCon
+from lib.conexiones.auth_server_con import AuthServerCon
+from lib.conexiones.hub_server_con import HubServerCon
 from lib.interfacesJuego.logica.GestorJuegos import GestorJuegos
-import lib.util.json_util as json_util
-from lib.util.player_util import PlayerUtil
+from lib.presentation.json_util import JsonUtil
 
 import sys
+
 
 class RestApi():
     """ Fachada de la API REST.
     ---
     Esta clase es una fachada con las operaciones proporcionadas por la API REST.
     """
+
     def __init__(self):
-        self.authCon = authServerCon()
-        self.hubCon = hubServerCon()
+        self.auth_con = AuthServerCon()
+        self.hub_con = HubServerCon()
         self.gestor_juegos = GestorJuegos()
-        self.player_util = PlayerUtil()
         # self.juego.check()
 
     def status(self, request):
@@ -42,8 +42,7 @@ class RestApi():
         """
         try:
             token = request.form['token']
-            print(token)
-            if self.authCon.verificar_usuario(token):
+            if self.auth_con.verificar_usuario(token):
                 nombre = ''
                 if 'nombre' in request.form:
                     nombre = request.form['nombre']
@@ -51,8 +50,9 @@ class RestApi():
                 return (200, str(n))
             else:
                 return (401, 'Acceso denegado')
-        except Exception as e: 
+        except Exception as e:
             print(e, file=sys.stderr)
+            raise
             return (500, 'Error del servidor')
 
     def dar_de_alta(self, request):
@@ -69,15 +69,16 @@ class RestApi():
         try:
             token = request.form['token']
 
-            if self.authCon.verificar_usuario(token):
-                if self.hubCon.darDeAlta():
+            if self.auth_con.verificar_usuario(token):
+                if self.hub_con.dar_de_alta():
                     return (200, 'OK')
                 else:
                     return (500, 'Error del servidor')
             else:
                 return (401, 'Acceso denegado')
-        except Exception as e: 
+        except Exception as e:
             print(e, file=sys.stderr)
+            raise
             return (500, 'Error del servidor')
 
     def dar_de_baja(self, request):
@@ -95,15 +96,16 @@ class RestApi():
         try:
             token = request.form['token']
 
-            if self.authCon.verificar_usuario(token):
-                if self.hubCon.darDeBaja():
+            if self.auth_con.verificar_usuario(token):
+                if self.hub_con.dar_de_baja():
                     return (200, 'OK')
                 else:
                     return (500, 'Error del servidor')
-            else :
+            else:
                 return (401, 'Acceso denegado')
-        except Exception as e: 
+        except Exception as e:
             print(e, file=sys.stderr)
+            raise
             return (500, 'Error del servidor')
 
     def obtener_estado(self, request):
@@ -118,10 +120,11 @@ class RestApi():
         """
         try:
             estado = self.gestor_juegos.obtener_estado()
-            estado_json = json_util.estado_a_json(estado)
+            estado_json = JsonUtil.objeto_a_json(estado)
             return (200, estado_json)
-        except Exception as e: 
+        except Exception as e:
             print(e, file=sys.stderr)
+            raise
             return (500, 'Error del servidor')
 
     def hacer_movimiento(self, request):
@@ -138,16 +141,17 @@ class RestApi():
         try:
             token = request.form['token']
 
-            if self.authCon.verificar_usuario(token):
+            if self.auth_con.verificar_usuario(token):
                 movimiento_json = request.form['movimiento']
-                movimiento = json_util.json_a_objeto(movimiento_json)
+                movimiento = JsonUtil.json_a_objeto(movimiento_json)
                 self.gestor_juegos.hacer_movimiento(movimiento, token)
                 return (200, 'OK')
             else:
                 return (401, 'Acceso denegado')
-        except Exception as e: 
+        except Exception as e:
             print(e, file=sys.stderr)
             print(n, file=sys.stderr)
+            raise
             return (500, 'Error del servidor')
 
     def obtener_juegos(self, request):
@@ -162,10 +166,11 @@ class RestApi():
         """
         try:
             juegos = self.gestor_juegos.obtener_juegos()
-            juegos_json = json_util.objeto_a_json(juegos)
+            juegos_json = JsonUtil.objeto_a_json(juegos)
             return (200, juegos_json)
-        except Exception as e: 
+        except Exception as e:
             print(e, file=sys.stderr)
+            raise
             return (500, 'Error del servidor')
 
     def seleccionar_juego(self, request):
@@ -183,13 +188,14 @@ class RestApi():
         try:
             token = request.form['token']
 
-            if self.authCon.verificar_usuario(token):
+            if self.auth_con.verificar_usuario(token):
                 juego = request.form['juego']
                 self.gestor_juegos.seleccionar_juego(juego)
 
                 return (200, 'OK')
             else:
                 return (401, 'Acceso denegado')
-        except Exception as e: 
+        except Exception as e:
             print(e, file=sys.stderr)
+            raise
             return (500, 'Error del servidor')

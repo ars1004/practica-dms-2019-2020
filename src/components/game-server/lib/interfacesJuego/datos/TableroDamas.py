@@ -7,7 +7,7 @@ from lib.interfacesJuego.datos.TableroInterfaz import Tablero
 class TableroDamas(Tablero):
     
     def __init__(self,size):
-       super().__init__(self,size)
+       super().__init__(size)
        self.colocarPeonesIniciales()
 
     def colocarPeonesIniciales (self):
