@@ -12,7 +12,7 @@ class CreadorEnRaya(Creador):
         self.adjudicarTamaño(tamaño)
         self.tablero = self.crearTablero(self.tamaño)
         self.jugadores = jugadores
-        self.arbitro = ArbitroEnRaya(self.tablero,self.jugadores)
+        self.arbitro = ArbitroEnRaya(self.board,self.jugadores)
     
     def adjudicarTamaño(self,size):
         super().adjudicarTamaño(size)

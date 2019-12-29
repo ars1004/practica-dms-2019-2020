@@ -5,12 +5,13 @@ from lib.interfacesJuego.logica.arbitro import Arbitro
 
 class ArbitroEnRaya(Arbitro):
     num = 0
-    grid = []
     jugadores = []
     jugadorTurno = 0
     def __init__(self,tablero,jugadores):
         super().__init__(tablero,jugadores)
-        
+        self.grid = tablero
+        self.tablero = self.grid.grid
+
     def moverPieza(self,fila,columna,jugador):
         if self.jugadorTurno == jugador and self.movimientoLegal(fila,columna):
             self.grid.colocar(fila,columna,self.jugadorTurno)
@@ -19,8 +20,8 @@ class ArbitroEnRaya(Arbitro):
             raise
     
     def movimientoLegal(self,fila,columna):
-        if fila >= 0 and fila < len(self.grid) and columna >= 0 and columna < len(self.grid):
-            if self.grid[fila][columna] == 0:
+        if fila >= 0 and fila < len(self.tablero) and columna >= 0 and columna < len(self.tablero):
+            if self.tablero[fila][columna] == 0:
                 return True
         return False
     
@@ -30,17 +31,17 @@ class ArbitroEnRaya(Arbitro):
     
     def estaAcabado(self):
         noZero = 0
-        for i in range(len(self.grid)):
+        for i in range(len(self.tablero)):
             if self.enFila(i) == True:
                 return True
-            for j in range(len(self.grid)):
+            for j in range(len(self.tablero)):
                 if self.enColumna(j) == True:
                    return True
-                if self.grid[i][j] != 0:
+                if self.tablero[i][j] != 0:
                     noZero += 1
         if self.enDiagonal() == True:
                     return True        
-        if noZero ==  len(self.grid)*len(self.grid):
+        if noZero ==  len(self.tablero)*len(self.tablero):
             return True
         else:
             return False
@@ -48,11 +49,11 @@ class ArbitroEnRaya(Arbitro):
     def enFila(self,row):
         noZero = 0
         valor = 0
-        for x in self.grid[row]:
+        for x in self.tablero[row]:
             if x != 0:
                 valor += x
                 noZero += 1
-        if (noZero == valor or noZero == valor/2) and noZero == len(self.grid):
+        if (noZero == valor or noZero == valor/2) and noZero == len(self.tablero):
             return True
         else:
             return False
@@ -60,13 +61,13 @@ class ArbitroEnRaya(Arbitro):
     def enColumna(self,column):
         noZero = 0
         valor = 0
-        for i in range(len(self.grid)):
-            for j in range(len(self.grid)):
+        for i in range(len(self.tablero)):
+            for j in range(len(self.tablero)):
                 if j == column:
-                    if self.grid[i][j] != 0:
-                        valor += self.grid[i][j]
+                    if self.tablero[i][j] != 0:
+                        valor += self.tablero[i][j]
                         noZero += 1
-        if noZero == len(self.grid) and (noZero == valor or noZero == valor/2):
+        if noZero == len(self.tablero) and (noZero == valor or noZero == valor/2):
             return True
         else:
             return False
@@ -74,13 +75,13 @@ class ArbitroEnRaya(Arbitro):
     def enDiagonal(self):
         noZero = 0
         diagonal = 0
-        for i in range(len(self.grid)):
-            for j in range(len(self.grid)):
+        for i in range(len(self.tablero)):
+            for j in range(len(self.tablero)):
                 if i == j:
-                    if self.grid[i][j] != 0:
-                        diagonal += self.grid[i][j]
+                    if self.tablero[i][j] != 0:
+                        diagonal += self.tablero[i][j]
                         noZero += 1
-        if noZero == len(self.grid) and (noZero == diagonal or noZero == diagonal/2):
+        if noZero == len(self.tablero) and (noZero == diagonal or noZero == diagonal/2):
             return True
         else:
             return False
