@@ -12,7 +12,7 @@ class CreadorDamas(Creador):
         self.adjudicarTamaño(tamaño)
         self.tablero = self.crearTablero(self.tamaño)
         self.jugadores = jugadores
-        self.arbitro = ArbitroDamas(self.tablero,self.jugadores)
+        self.arbitro = ArbitroDamas(self.board,self.jugadores)
     
     def adjudicarTamaño(self,size):
         super().adjudicarTamaño(size)

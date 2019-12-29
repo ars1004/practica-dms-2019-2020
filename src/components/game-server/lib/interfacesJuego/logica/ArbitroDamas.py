@@ -6,36 +6,26 @@ from lib.interfacesJuego.logica.arbitro import Arbitro
 
 class ArbitroDamas(Arbitro):
     num = 0
-    grid = []
     jugadores = []
     jugadorTurno = 0
     def __init__(self,tablero,jugadores):
         super().__init__(tablero,jugadores)
-        
-    def colocarPeonesIniciales (self):
-        self.grid = [[0, 'n', 0, 'n', 0, 'n', 0, 'n'],
-           ['n', 0, 'n', 0, 'n', 0, 'n', 0],
-           [0, 'n', 0, 'n', 0, 'n', 0, 'n'],
-           [0, 0, 0, 0, 0, 0, 0, 0],
-           [0, 0, 0, 0, 0, 0, 0, 0],
-           ['b', 0, 'b', 0, 'b', 0, 'b', 0],
-           [0, 'b', 0, 'b', 0, 'b', 0, 'b'],
-           ['b', 0, 'b', 0, 'b', 0, 'b', 0]]
+        self.grid = tablero
         
     def moverPieza(self,filaI,columnaI,filaF,columnaF,jugador):
         if self.jugadorTurno == jugador and self.movimientoLegal(filaI,columnaI,filaF,columnaF):
             if self.jugadorTurno == 1 and not(self.cambiarDamas(filaF)):
-                self.grid[filaI][columnaI] = 0
-                self.grid[filaF][columnaF] = 'b'
+                self.grid.quitarPieza(filaI,columnaI)
+                self.grid.colocar(filaF,columnaF,'b')
             else:
-                self.grid[filaI][columnaI] = 0
-                self.grid[filaF][columnaF] = 'B'
+                self.grid.quitarPieza(filaI,columnaI)
+                self.grid.colocar(filaF,columnaF,'B')
             if self.jugadorTurno == 2 and not(self.cambiarDamas(filaF)):
-                self.grid[filaI][columnaI] = 0
-                self.grid[filaF][columnaF] = 'n'
+                self.grid.quitarPieza(filaI,columnaI)
+                self.grid.colocar(filaF,columnaF,'n')
             else:
-                self.grid[filaI][columnaI] = 0
-                self.grid[filaF][columnaF] = 'N'
+                self.grid.quitarPieza(filaI,columnaI)
+                self.grid.colocar(filaF,columnaF,'N')
             self.jugadorTurno = self.obtenerJugadorConTurno()
         else:
             raise
@@ -54,17 +44,17 @@ class ArbitroDamas(Arbitro):
         if self.grid[fila1][columna1] is not 0:
             if self.grid[fila1][columna1] == 'n' or self.grid[fila1][columna1] == 'b':
                 if fila1 == 2 or fila1 == 5:
-                    self.devolver = self.esValidoPeonPrimero(self,fila1,columna1,fila2,columna2)
+                    self.devolver = self.esValidoPeonPrimero(fila1,columna1,fila2,columna2)
                 else:
-                    self.devolver = self.esValidoPeonSegundo(self,fila1,columna1,fila2,columna2)
+                    self.devolver = self.esValidoPeonSegundo(fila1,columna1,fila2,columna2)
             elif self.grid[fila1][columna1] == 'N' or self.grid[fila1][columna1] == 'B':
-                self.devolver = self.esValidoDamas(self,fila1,columna1,fila2,columna2)
+                self.devolver = self.esValidoDamas(fila1,columna1,fila2,columna2)
         return self.devolver
     
     def esValidoPeonPrimero(self,fila1,columna1,fila2,columna2):
         if self.grid[fila1][columna1] is not 0:
             if self.grid[fila2][columna2] == 0:
-                if self.esMovimientoDiagonalPrimero(self,fila1,columna1,fila2,columna2) == True:
+                if self.esMovimientoDiagonalPrimero(fila1,columna1,fila2,columna2) == True:
                     return True
         else:
             return False
@@ -76,17 +66,17 @@ class ArbitroDamas(Arbitro):
                 if resta == 0 or resta==2 or resta == 4:
                     if resta == 4:
                         if self.grid[fila1+1][columna1+1] == 'b':
-                            self.grid[fila1+1][columna1+1] = 0
+                            self.grid.quitarPieza(fila1+1,columna1+1)
                         elif self.grid[fila1+1][columna1-1] == 'b':
-                            self.grid[fila1+1][columna1-1] = 0
+                            self.grid.quitarPieza(fila1+1,columna1-1)
                     return True
             elif self.grid[fila1][columna1] == 'b':
                 if resta == 0 or resta == -2 or resta == -4:
                     if resta == 4:
                         if self.grid[fila1-1][columna1+1] == 'n':
-                            self.grid[fila1-1][columna1+1] = 0
+                            self.grid.quitarPieza(fila1-1,columna1+1)
                         elif self.grid[fila1-1][columna1-1] == 'n':
-                            self.grid[fila1-1][columna1-1] = 0
+                            self.grid.quitarPieza(fila1-1,columna1-1)
                     return True
             else:
                 return False
@@ -96,7 +86,7 @@ class ArbitroDamas(Arbitro):
     def esValidoPeonSegundo(self,fila1,columna1,fila2,columna2):
         if self.grid[fila1][columna1] is not 0:
             if self.grid[fila2][columna2] == 0:
-                if self.esMovimientoDiagonalSegundo(self,fila1,columna1,fila2,columna2) == True:
+                if self.esMovimientoDiagonalSegundo(fila1,columna1,fila2,columna2) == True:
                     return True
         else:
             return False
@@ -106,20 +96,20 @@ class ArbitroDamas(Arbitro):
             resta = (fila1+columna1)-(fila2+columna2)
             if self.grid[fila1][columna1] == 'n':
                 if self.grid[fila1+1][columna1+1]==0 or self.grid[fila1+1][columna1+1]=='b' or self.grid[fila1+1][columna1+1]=='B':
-                    self.grid[fila1+1][columna1+1]=0
+                    self.grid.quitarPieza(fila1+1,columna1+1)
                     if resta == 0 or resta==4:
                         return True
                 elif self.grid[fila1+1][columna1-1]==0 or self.grid[fila1+1][columna1-1]=='b' or self.grid[fila1+1][columna1-1]=='B':
-                    self.grid[fila1+1][columna1-1]=0
+                    self.grid.quitarPieza(fila1+1,columna1-1)
                     if resta == 0 or resta==4:
                         return True
             elif self.grid[fila1][columna1] == 'b':
                 if self.grid[fila1-1][columna1+1]==0 or self.grid[fila1-1][columna1+1]=='n' or  self.grid[fila1-1][columna1+1]=='N':
-                    self.grid[fila1-1][columna1+1]=0
+                    self.grid.quitarPieza(fila1-1,columna1+1)
                     if resta == 0 or resta == -4:
                         return True
                 elif self.grid[fila1-1][columna1-1]==0 or self.grid[fila1-1][columna1-1]=='n' or self.grid[fila1-1][columna1-1]=='N':
-                    self.grid[fila1-1][columna1-1]=0
+                    self.grid.quitarPieza(fila1-1,columna1-1)
                     if resta == 0 or resta == -4:
                         return True
             else:
@@ -130,7 +120,7 @@ class ArbitroDamas(Arbitro):
     def esValidoDamas(self,fila1,columna1,fila2,columna2):
         if self.grid[fila1][columna1] is not 0:
             if self.grid[fila2][columna2] == 0:
-                if self.esMovimientoDiagonalDama(self,fila1,columna1,fila2,columna2) == True:
+                if self.esMovimientoDiagonalDama(fila1,columna1,fila2,columna2) == True:
                     return True
         else:
             return False					
@@ -142,25 +132,25 @@ class ArbitroDamas(Arbitro):
                 if resta == 0 or resta==2 or resta==4 or resta==6 or resta==8 or resta==10 or resta==12:
                     if resta > 2:
                         if (fila1+1 <= fila2) and self.grid[fila1+1][columna1] == 'n' or self.grid[fila1+1][columna1] == 'N':
-                            self.grid[fila1+1][columna1] = 0
+                            self.grid.quitarPieza(fila1+1,columna1)
                         elif (fila1+3 <= fila2) and self.grid[fila1+3][columna1] == 'n' or self.grid[fila1+3][columna1] == 'N':
-                            self.grid[fila1+3][columna1] = 0
+                            self.grid.quitarPieza(fila1+3,columna1)
                         elif (fila1+5 <= fila2) and self.grid[fila1+5][columna1] == 'n' or self.grid[fila1+5][columna1] == 'N':
-                            self.grid[fila1+5][columna1] = 0
+                            self.grid.quitarPieza(fila1+5,columna1)
                         elif (fila1+7 <= fila2) and self.grid[fila1+7][columna1] == 'n' or self.grid[fila1+7][columna1] == 'N':
-                            self.grid[fila1+7][columna1] = 0
+                            self.grid.quitarPieza(fila1+7,columna1)
                     return True
             elif self.grid[fila1][columna1] == 'N':
                 if resta == 0 or resta == -2 or resta==-4 or resta==-6 or resta==-8 or resta==-10 or resta==-12:
                     if resta < -2:
                         if (fila1-1 <= fila2) and self.grid[fila1-1][columna1] == 'n' or self.grid[fila1-1][columna1] == 'N':
-                            self.grid[fila1-1][columna1] = 0
+                            self.grid.quitarPieza(fila1-1,columna1)
                         elif (fila1-3 <= fila2) and self.grid[fila1-3][columna1] == 'n' or self.grid[fila1-3][columna1] == 'N':
-                            self.grid[fila1-3][columna1] = 0
+                            self.grid.quitarPieza(fila1-3,columna1)
                         elif (fila1-5 <= fila2) and self.grid[fila1-5][columna1] == 'n' or self.grid[fila1-5][columna1] == 'N':
-                            self.grid[fila1-5][columna1] = 0
+                            self.grid.quitarPieza(fila1-5,columna1)
                         elif (fila1-7 <= fila2) and self.grid[fila1-7][columna1] == 'n' or self.grid[fila1-7][columna1] == 'N':
-                            self.grid[fila1-7][columna1] = 0
+                            self.grid.quitarPieza(fila1-7,columna1)
                     return True
             else:
                 return False

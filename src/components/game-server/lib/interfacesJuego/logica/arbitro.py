@@ -5,7 +5,6 @@ Interfaz Arbitro
 class Arbitro(object):
     
     num = 0
-    grid = []
     jugadores = []
     turno = 0
     def __init__(self,tablero,jugadores):
