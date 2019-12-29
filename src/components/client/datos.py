@@ -29,6 +29,9 @@ class datos:
             print(str(i) + ' ' + listas[i]['name'])
         opcion = int(input('Seleccione el server al que desea unirse: '))
         return opcion,listas
+    def cambioJuego():
+                opcion = input('Desea cambiar de juego? [s/n]')
+                return opcion
     def listaJuego(lista):
         listas = json.loads(lista)
         for i in range(len(listas)):

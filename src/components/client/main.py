@@ -9,9 +9,11 @@ class main:
     listaserver = logica.obtenerListaServidores(token)
     opcionserver,listasserver = datos.listaServidores(listaserver)
     #servidor = logica.conectarServidor(listasserver,opcionserver,nombre,token)
-    listajuego = logica.obtenerJuego(listasserver,opcionserver)
-    opcion,listasjuego = datos.listaJuego(listajuego)
-    logica.conectarJuego(listasserver,opcion,opcionserver,listasjuego,token)
+    opcioncambio = datos.cambioJuego()
+    if opcioncambio == 's':
+        listajuego = logica.obtenerJuego(listasserver,opcionserver)
+        opcion,listasjuego = datos.listaJuego(listajuego)
+        logica.conectarJuego(listasserver,opcion,opcionserver,listasjuego,token)
     servidor = logica.conectarServidor(listasserver,opcionserver,nombre,token)
     estaacabado = False
     while(estaacabado == False):

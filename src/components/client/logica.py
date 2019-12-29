@@ -49,7 +49,6 @@ class logica:
         row = input('introduce fila ')
         column = input('introduce columna ')
         data = [row, column]
-        print(data)
         servidor.mover(token, json.dumps(data))
 
     def imprimir_estado(estado, nombre):
