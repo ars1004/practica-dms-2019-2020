@@ -23,11 +23,10 @@ class main:
         elif opcion == '2':
             logica.realizarMoviento(token,servidor)
             estadomovimiento = logica.obtenerEstado(servidor)
-            logica.imprimir_estado(estadomovimiento,nombre)
-            if datos.estaacabado(estadomovimiento):
+            if logica.estaacabado(estadomovimiento):
                 estaacabado = logica.estaacabado(estadomovimiento)
         else:
             print('Opcion incorrecta vuelva a intentarlo:')
         if logica.estaacabado(estadojuego):
-            estaacabado == True  
+            estaacabado = logica.estaacabado(estadomovimiento) 
             
