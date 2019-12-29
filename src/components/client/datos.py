@@ -48,10 +48,7 @@ class datos:
     def realizarMoviento(token, servidor):
         row = input('introduce fila ')
         column = input('introduce columna ')
-        data = {
-            'x': row,
-            'y': column
-        }
+        data = [row, column]
         print(data)
         servidor.mover(token, json.dumps(data))
 
@@ -78,5 +75,5 @@ class datos:
     def conectarJuego(listasservidor, opcion, listajuego, token):
         servidor = conexionservidor(
             listasservidor[opcion]['host'], listasservidor[opcion]['port'])
-        servidor.seleccionarJuego(token, listajuego)
+        servidor.seleccionarJuego(token, listajuego[opcion])
         return 'ok'

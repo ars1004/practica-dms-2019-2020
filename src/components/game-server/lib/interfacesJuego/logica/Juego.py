@@ -23,3 +23,6 @@ class Juego(object):
 
     def obtener_estado(self):
         return self.creador.obtenerEstado()
+    
+    def hacer_movimiento(self, movimiento, jugador):
+        self.creador.hacer_movimiento(movimiento, jugador)

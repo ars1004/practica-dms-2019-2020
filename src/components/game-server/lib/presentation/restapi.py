@@ -150,7 +150,6 @@ class RestApi():
                 return (401, 'Acceso denegado')
         except Exception as e:
             print(e, file=sys.stderr)
-            print(n, file=sys.stderr)
             raise
             return (500, 'Error del servidor')
 

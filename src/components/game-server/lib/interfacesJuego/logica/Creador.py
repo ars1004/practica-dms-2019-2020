@@ -21,3 +21,6 @@ class Creador(object):
    
     def obtenerEstado(self):
         return 1, [[0,0,0],[0,0,0],[0,0,0]], False # Debería usar el metodo de los hijos
+
+    def hacer_movimiento(self, movimiento, jugador):
+        self.arbitro.moverPieza(*movimiento, jugador)

@@ -23,6 +23,7 @@ class CreadorDamas(Creador):
         return grid
     
     def obtenerEstado(self):
+        print("jeje")
         player = self.arbitro.jugadorTurno
         tablero = self.tablero
         acabado = self.arbitro.estaAcabado()

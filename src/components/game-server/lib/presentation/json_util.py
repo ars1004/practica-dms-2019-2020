@@ -25,4 +25,4 @@ class JsonUtil:
         return json.dumps(objeto)
 
     def json_a_objeto(json_str):
-        return json.loads(json_str)
+        return map(int, json.loads(json_str))

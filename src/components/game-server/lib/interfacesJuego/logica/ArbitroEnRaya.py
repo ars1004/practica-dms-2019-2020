@@ -2,17 +2,22 @@
 Clase concreta arbitro del juego 3 en raya
 """
 from lib.interfacesJuego.logica.arbitro import Arbitro
+import sys
 
 class ArbitroEnRaya(Arbitro):
     num = 0
     jugadores = []
-    jugadorTurno = 0
+    jugadorTurno = 1
     def __init__(self,tablero,jugadores):
         super().__init__(tablero,jugadores)
         self.grid = tablero
         self.tablero = self.grid.grid
 
     def moverPieza(self,fila,columna,jugador):
+        print(self.jugadorTurno, file=sys.stderr)
+        print(jugador, file=sys.stderr)
+        print(fila, file=sys.stderr)
+        print(columna, file=sys.stderr)
         if self.jugadorTurno == jugador and self.movimientoLegal(fila,columna):
             self.grid.colocar(fila,columna,self.jugadorTurno)
             self.jugadorTurno = self.obtenerJugadorConTurno()

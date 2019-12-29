@@ -2,6 +2,8 @@ from lib.interfacesJuego.datos.ListaJugadores import ListaJugadores
 from lib.interfacesJuego.logica.JuegoDamas import JuegoDamas
 from lib.interfacesJuego.logica.JuegoEnRaya import JuegoEnRaya
 import sys
+
+
 class GestorJuegos:
     """ Contiene una lista de juegos que se pueden juegar.
     Cada juego esta en un diccionario donde la clave es el nombre y el
@@ -10,8 +12,8 @@ class GestorJuegos:
     y se añade al diccionario con el nombre del juego.
     Ejemplo:
         'from logica.JuegoGo import JuegoGo'
-        
-        
+
+
         'self.dict_juegos = {
         ...
         "Go": JuegoGo,
@@ -19,6 +21,7 @@ class GestorJuegos:
         }'
 
     """
+
     def __init__(self):
         self.dict_juegos = {
             "Damas": JuegoDamas,
@@ -26,7 +29,7 @@ class GestorJuegos:
         }
         self.juego = None
         self.jugadores = ListaJugadores()
-    
+
     def obtener_juegos(self):
         """ Obtiene la lista de juegos disponibles.
         """
@@ -36,7 +39,7 @@ class GestorJuegos:
         """ Selecciona uno de los juegos para jugar.
         """
         juego = self.dict_juegos[juego]
-        self.juego = juego([1,2])
+        self.juego = juego([1, 2])
         self.jugadores.vaciar()
 
     def añadir_jugador(self, token):
@@ -46,7 +49,7 @@ class GestorJuegos:
 
     def hacer_movimiento(self, movimiento, token):
         jugador = self.jugadores.obtener_jugador(token)
-        self.juego.hacer_movimiento(*movimiento, jugador.returnId())
+        self.juego.hacer_movimiento(movimiento, jugador.returnId())
 
     def obtener_estado(self):
         return self.juego.obtener_estado()

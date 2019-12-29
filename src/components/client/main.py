@@ -8,10 +8,11 @@ class main:
         token = datos.login(nombre,password)
     listaserver = datos.obtenerListaServidores(token)
     opcion,listasserver = interfaz.listaServidores(listaserver)
-    servidor = datos.conectarServidor(listasserver,opcion,nombre,token)
+    # servidor = datos.conectarServidor(listasserver,opcion,nombre,token)
     listajuego = datos.obtenerJuego(listasserver,opcion)
     opcion,listasjuego = interfaz.listaJuego(listajuego)
     datos.conectarJuego(listasserver,opcion,listasjuego,token)
+    servidor = datos.conectarServidor(listasserver,opcion,nombre,token)
     estaacabado = False
     while(estaacabado == False):
         estado = datos.obtenerEstado(servidor)
